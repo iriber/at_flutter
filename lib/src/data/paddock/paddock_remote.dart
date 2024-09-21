@@ -34,7 +34,7 @@ class PaddockRemote implements PaddockRepository{
 
       dtos.forEach((dto) {
         Paddock paddock = Paddock.fromDto(dto);
-        paddock.farm = farm;
+        paddock.farmId= farm.id;
         paddocks.add(paddock);
       });
 

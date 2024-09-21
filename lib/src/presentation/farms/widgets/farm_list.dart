@@ -26,8 +26,6 @@ class FarmList extends StatelessWidget {
               company: company,
               onSelect: (context, company) {
                 BlocProvider.of<FarmSelectBloc>(context).add((SelectFarmRequested(company)));
-                //DependencyManager().get<CompanySelectBloc>().add(SelectCompanyRequested(company));
-
               },
             ),
         ],

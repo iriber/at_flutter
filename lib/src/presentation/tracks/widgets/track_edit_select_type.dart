@@ -39,10 +39,14 @@ class TrackEditSelectType extends StatelessWidget{
   FionaLogger logger = DependencyManager().get<FionaLogger>();
 
   TrackAddState state;
+  late PaddockSelectController paddockSelectController;
+  Paddock? paddock;
 
 
   TrackEditSelectType(this.state) {
-
+    paddockSelectController = PaddockSelectController(farm: this.state.farm??Farm.empty());
+    paddock = (this.state.form?.getPaddock().getValue()?? Paddock.empty()) as Paddock?;
+    paddockSelectController.setSelected(paddock);
   }
 
   @override
@@ -57,10 +61,20 @@ class TrackEditSelectType extends StatelessWidget{
 
     AppTheme appTheme = Environment().config.appTheme;
 
+    widgets.add(Container(
+      padding: const EdgeInsets.all(10),
+      child: ATSelectField(
+        selectFieldController: paddockSelectController,
+        label: Fionai18n.message("paddock"),
+        //error: loginState.form?.getEmail().errorMessage,
+        //prefixIcon: ATIcons().inputTextIconEmail(),
+      ),
+    ));
+
     widgets.add(
         GestureDetector(
           onTap: (){
-            TrackForm form = this.state.form??TrackForm.empty();
+            TrackForm form = this.getForm(context);
             BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(form)));
           },
           child: _buildLink(context, Fionai18n.message("track.livestock"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow),
@@ -71,7 +85,7 @@ class TrackEditSelectType extends StatelessWidget{
     widgets.add(
         GestureDetector(
           onTap: (){
-            TrackForm form = this.state.form??TrackForm.empty();
+            TrackForm form = this.getForm(context);
             BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(form)));
           },
           child: _buildLink(context, Fionai18n.message("track.agriculture"), ATIcons().getIconFood(appTheme.getBodyForegroundColor(), 100), 1, Colors.green),
@@ -125,10 +139,14 @@ class TrackEditSelectType extends StatelessWidget{
   }
 
 
-  void doNext(BuildContext context) {
+  TrackForm getForm(BuildContext context) {
 
     TrackForm form = this.state.form??TrackForm.empty();
-    BlocProvider.of<TrackAddBloc>(context).add((TrackAddRequested(form)));
+
+    Paddock paddock = paddockSelectController.getSelected();
+    form.getPaddock().setValue( paddock );
+
+    return form;
 
   }
 

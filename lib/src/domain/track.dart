@@ -2,6 +2,7 @@
 import 'package:agro_tracking_flutter/src/domain/core/farm_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/generic_model.dart';
+import 'package:agro_tracking_flutter/src/domain/media.dart';
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/domain/track_food.dart';
@@ -10,19 +11,20 @@ import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class Track extends GenericModel{
 
-  Paddock? paddock;
-  User? user;
-  Farm? farm;
+  int? paddockId;
+  String? paddockDesc;
+  int? userId;
+  int? farmId;
   DateTime datetime = DateTime.timestamp();
-  TrackAnimal? trackAnimal;
-  TrackFood? trackFood;
-  TrackWater? trackWater;
-
+  List<TrackAnimal>? animalTracks;
+  List<TrackFood>? foodTracks;
+  List<TrackWater>? waterTracks;
+  List<Media>? medias;
 
 
   Track(
-      { int id=-1,this.paddock,
-      this.user}):super(id);
+      { int id=-1,this.paddockId,
+      this.userId,this.farmId}):super(id);
 
   Track.empty():super(-1);
 
@@ -31,18 +33,19 @@ class Track extends GenericModel{
   }
 
   Track.fromJson(dynamic item):super(item["id"]) {
-    paddock = Paddock.fromJson(item["paddock"]);
-    user = User.fromJson(item["user"]);
-    farm = Farm.fromJson(item["farm"]);
+    paddockId = item["paddockId"];
+    paddockDesc = item["paddockDesc"];
+    userId = item["userId"];
+    farmId = item["farmd"];
   }
 
   Map<String, Object> toMap(){
     return {
       'id':id,
       'datetime':datetime??"",
-      'paddock': this.paddock?.toMap()??'',
-      'farm': this.farm?.toMap()??'',
-      'user': this.user?.toMap()??'',
+      'paddockId': paddockId??'',
+      'farmId': farmId??'',
+      'userId': userId??'',
     };
   }
 

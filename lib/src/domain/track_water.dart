@@ -13,10 +13,11 @@ class TrackWater extends GenericModel{
   Lookup? cleaning;
   Lookup? windmillQuality;
   Lookup? windmillQuantity;
+  int? trackId;
 
   TrackWater(id,
       { this.type,this.quality,this.cleaning,
-        this.windmillQuality, this.windmillQuantity
+        this.windmillQuality, this.windmillQuantity, this.trackId
       }):super(id);
 
   TrackWater.empty():super(-1);
@@ -31,17 +32,19 @@ class TrackWater extends GenericModel{
     cleaning = Lookup.fromJson(item["cleaning"]);
     windmillQuantity = Lookup.fromJson(item["windmillQuantity"]);
     windmillQuality = Lookup.fromJson(item["windmillQuality"]);
+    trackId = item["trackId"];
 
   }
 
   Map<String, Object> toMap(){
     return {
       'id':id,
-      'type': this.type?.toMap()??'',
-      'quality': this.quality?.toMap()??'',
-      'cleaning': this.cleaning?.toMap()??'',
-      'windmillQuality': this.windmillQuality?.toMap()??'',
-      'windmillQuantity': this.windmillQuantity?.toMap()??'',
+      'type_code':type?.code??"",
+      'quality_code': this.quality?.code??"",
+      'cleaning_code': this.cleaning?.code??"",
+      'windmillQuality_code': this.windmillQuality?.code??"",
+      'windmillQuantity_code': this.windmillQuantity?.code??"",
+      'trackId':trackId??"",
     };
   }
 

@@ -2,7 +2,12 @@ import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
 import 'package:equatable/equatable.dart';
 
-enum TrackAddStatus { initial, dateSuccess, dateFailure, selectTrackType, selectLivestockType,  sending, success, failure }
+enum TrackAddStatus {
+  initial,
+  dateSuccess, dateFailure,
+  selectTrackType, selectLivestockType,
+  editAnimalTracks,
+  sending, success, failure }
 
 class TrackAddState extends Equatable {
 

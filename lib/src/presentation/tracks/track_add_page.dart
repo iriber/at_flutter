@@ -11,6 +11,7 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.da
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_state.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_animal.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_type.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_set_date.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_livestock_select_type.dart';
@@ -82,6 +83,9 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
             case TrackAddStatus.selectLivestockType:{
               bodyWidget = _buildFormStep3(context, state);
             }break;
+            case TrackAddStatus.editAnimalTracks:{
+              bodyWidget = _buildFormStepEditTrackAnimals(context, state);
+            }break;
             case TrackAddStatus.failure:{
               bodyWidget = _buildFailure(context, state);
             }break;
@@ -126,5 +130,10 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
       NavAppTitle.changeTitle(context, getTitle(), subtitle:  subtitle);
     }
     return TrackEditLivestockSelectType(state);
+  }
+
+  Widget _buildFormStepEditTrackAnimals(BuildContext context, TrackAddState state) {
+
+    return TrackEditAnimal();
   }
 }

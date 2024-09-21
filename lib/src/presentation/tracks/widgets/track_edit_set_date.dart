@@ -41,17 +41,13 @@ class TrackEditSetDate extends StatelessWidget{
   bool rememberMe = false;
   DateTime? date;
   DateTime? time;
-  Paddock? paddock;
   TrackAddState state;
 
-  late PaddockSelectController paddockSelectController;
 
   TrackEditSetDate(this.state) {
-    paddockSelectController = PaddockSelectController(farm: this.state.farm??Farm.empty());
     time = (this.state.form?.getTime().getValue()?? DateTime.timestamp()) as DateTime?;
     date = (this.state.form?.getDate().getValue()?? DateTime.timestamp()) as DateTime?;
-    paddock = (this.state.form?.getPaddock().getValue()?? Paddock.empty()) as Paddock?;
-    paddockSelectController.setSelected(paddock);
+
   }
 
   @override
@@ -138,16 +134,13 @@ class TrackEditSetDate extends StatelessWidget{
 
   void doNext(BuildContext context) {
 
-    Paddock paddock = paddockSelectController.getSelected();
 
     logger.d("do next!");
     logger.d("date: ${date}");
-    logger.d("paddock: ${paddock}");
     logger.d("time ${time}");
 
     TrackForm form = this.state.form??TrackForm.empty();
 
-    form.getPaddock().setValue( paddock );
     form.getDate().setValue( date );
     form.getTime().setValue( time );
     //form.getPassword().value = password;

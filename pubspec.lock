@@ -322,8 +322,8 @@ packages:
   fiona_layout:
     dependency: "direct main"
     description:
-      path: "/media/bernardo/DATA/trabajo/FlutterPackages/fiona_layout"
-      relative: false
+      path: "../fiona_layout"
+      relative: true
     source: path
     version: "0.0.1"
   fiona_logger:
@@ -338,8 +338,8 @@ packages:
   fiona_persistence:
     dependency: "direct main"
     description:
-      path: "/media/bernardo/DATA/trabajo/FlutterPackages/fiona_persistence"
-      relative: false
+      path: "../fiona_persistence"
+      relative: true
     source: path
     version: "1.0.0"
   fixnum:

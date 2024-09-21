@@ -57,7 +57,17 @@ class TrackEditLivestockSelectType extends StatelessWidget{
 
     AppTheme appTheme = Environment().config.appTheme;
 
-    widgets.add(_buildLink(context, Fionai18n.message("track.animal"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow));
+    widgets.add(
+        GestureDetector(
+          onTap: (){
+            TrackForm form = this.getForm(context);
+            BlocProvider.of<TrackAddBloc>(context).add((TrackSetLivestockTypeRequested(form)));
+          },
+          child: _buildLink(context, Fionai18n.message("track.animal"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow)
+        )
+
+    );
+
     widgets.add(_buildLink(context, Fionai18n.message("track.food"), ATIcons().getIconFood(appTheme.getBodyForegroundColor(), 100), 1, Colors.green));
     widgets.add(_buildLink(context, Fionai18n.message("track.water"), ATIcons().getIconWater(appTheme.getBodyForegroundColor(), 100), 1, Colors.blue));
 
@@ -136,5 +146,13 @@ class TrackEditLivestockSelectType extends StatelessWidget{
           ],
         )
     );
+  }
+  TrackForm getForm(BuildContext context) {
+
+    TrackForm form = this.state.form??TrackForm.empty();
+
+
+    return form;
+
   }
 }

@@ -2,19 +2,29 @@
 import 'package:agro_tracking_flutter/src/domain/core/farm_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/generic_model.dart';
+import 'package:agro_tracking_flutter/src/domain/lot.dart';
+import 'package:agro_tracking_flutter/src/domain/media.dart';
 import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackFood extends GenericModel{
 
-  String name="";
-  User? user;
-  Farm? farm;
-  String date="";
-  String time="";
+  int? trackId;
+
+  int? lotId;
+  String? lotDesc;
+  double? hectareas;
+  double? consumoPorAnimal;
+  String? remanente;
+
+  String? resource;
+  String? availability;
+  String? availabilityDays;
+
+  //TODO corral
+
 
   TrackFood(id,
-      { this.name="",
-      this.user}):super(id);
+      { this.trackId, this.lotDesc, this.lotId}):super(id);
 
   TrackFood.empty():super(-1);
 
@@ -23,17 +33,17 @@ class TrackFood extends GenericModel{
   }
 
   TrackFood.fromJson(dynamic item):super(item["id"]) {
-    name=item["name"]??"";
-    user = User.fromJson(item["user"]);
-    farm = Farm.fromJson(item["farm"]);
+
+    trackId = item["trackId"];
+    lotId = item["lotId"];
+    lotDesc = item["lotDesc"];
   }
 
   Map<String, Object> toMap(){
     return {
       'id':id,
-      'name':this.name,
-      'farm': this.farm?.toMap()??'',
-      'user': this.user?.toMap()??'',
+      'trackId':trackId??"",
+      'lotId':lotId??"",
     };
   }
 
@@ -41,8 +51,5 @@ class TrackFood extends GenericModel{
     return id>0;
   }
 
-  TrackFood.fromDto(FarmDTO dto):super(dto.id) {
-    name =  dto.name;
-  }
 
 }

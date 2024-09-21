@@ -36,7 +36,9 @@ class TrackForm{
 
   Track buildTrack(){
     Track track = Track.empty();
-    track.paddock = _paddock.getValue() as Paddock;
+    Paddock paddock = _paddock.getValue() as Paddock;
+    track.paddockId = paddock.id;
+    track.paddockDesc = paddock.name;
     DateTime time = _time.getValue() as DateTime;
     DateTime date = _date.getValue() as DateTime;
     date.copyWith(hour: time.hour,minute: time.minute,second: time.second,millisecond: 0,microsecond: 0);

@@ -60,7 +60,10 @@ class MenuPage extends StatelessWidget implements IFionaAppBarLayoutPage {
               }
               break;
             default:
-              widget = _buildPage(context, List.empty());
+              BlocProvider.of<MenuBloc>(context)
+                  .add((const FetchAllMenusRequested()));
+              widget = _buildLoadingPage(context);
+              //widget = _buildPage(context, state.mainMenu);//_buildDefaultPage(context, List.empty());
           }
           return widget;
         }
@@ -81,5 +84,9 @@ class MenuPage extends StatelessWidget implements IFionaAppBarLayoutPage {
     );
   }
 
-
+  Widget _buildDefaultPage(BuildContext context, List<Menu> menuSettings) {
+    return Container(
+      child: Text("empty"),
+    );
+  }
 }

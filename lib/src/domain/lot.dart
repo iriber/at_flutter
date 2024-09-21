@@ -4,30 +4,30 @@ import 'package:agro_tracking_flutter/src/domain/core/paddock_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/generic_model.dart';
 
-class Paddock extends GenericModel{
+class Lot extends GenericModel{
 
   String name="";
-  int? farmId;
+  int? paddockId;
 
-  Paddock(
-      {int id=-1, this.name="",  this.farmId}):super(id);
+  Lot(
+      {int id=-1, this.name="",  this.paddockId}):super(id);
 
-  Paddock.empty():super(-1);
+  Lot.empty():super(-1);
 
-  Paddock.fromMap(Map<String, dynamic> item):super(item["id"]) {
-    Paddock.fromJson(item);
+  Lot.fromMap(Map<String, dynamic> item):super(item["id"]) {
+    Lot.fromJson(item);
   }
 
-  Paddock.fromJson(dynamic item):super(item["id"]) {
+  Lot.fromJson(dynamic item):super(item["id"]) {
     name=item["name"]??"";
-    farmId = item["farmId"];
+    paddockId = item["paddockId"];
   }
 
   Map<String, Object> toMap(){
     return {
       'id':id,
       'name':name,
-      'farmId': farmId??'',
+      'paddockId': paddockId??'',
     };
   }
 
@@ -38,15 +38,12 @@ class Paddock extends GenericModel{
   String toString(){
     return name;
   }
-  Paddock.fromDto(PaddockDTO dto):super(dto.id) {
-    name =  dto.name;
-    farmId = dto.farmId;
-  }
+
   @override
   bool operator ==(Object other) {
-    // Check if other is a Paddock and if names are equal
+    // Check if other is a Lot and if names are equal
     if (identical(this, other)) return true;
-    return other is Paddock && name == other.name;
+    return other is Lot && name == other.name;
   }
 
   @override

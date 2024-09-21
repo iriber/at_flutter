@@ -20,58 +20,45 @@ class TrackInMemory implements TrackRepository{
     Farm farm = Farm(id:1);
 
     Track track = Track(id:1);
-    track.paddock = Paddock(id:1,name:"Potrero 1", farm: farm);
+    track.paddockId= 1;
+    track.paddockDesc="Potrero 1";
     track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-06-20 08:30:00");
-    track.farm=farm;
+    track.farmId=1;
     tracks.add(track);
 
 
     track = Track(id:4);
-    track.paddock = Paddock(id:1,name:"Potrero 1", farm: farm);
+    track.paddockId= 1;
+    track.paddockDesc="Potrero 1";
+    track.farmId=1;
     track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-07-09 08:30:00");
-    track.farm=farm;
     tracks.add(track);
 
     track = Track(id:5);
-    track.paddock = Paddock(id:2,name:"Potrero 2", farm: farm);
-    track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-07-09 10:30:00");
-    track.farm=farm;
+    track.paddockId= 2;
+    track.paddockDesc="Potrero 2";
+    track.farmId=1;
     tracks.add(track);
 
     track = Track(id:7);
-    track.paddock = Paddock(id:1,name:"Potrero 1", farm: farm);
+    track.paddockId= 1;
+    track.paddockDesc="Potrero 1";
+    track.farmId=1;
     track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-08-09 08:30:00");
-    track.farm=farm;
     tracks.add(track);
 
     track = Track(id:8);
-    track.paddock = Paddock(id:2,name:"Potrero 2", farm: farm);
+    track.paddockId= 2;
+    track.paddockDesc="Potrero 2";
+    track.farmId=1;
     track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-08-09 10:30:00");
-    track.farm=farm;
     tracks.add(track);
 
     track = Track(id:9);
-    track.paddock = Paddock(id:4,name:"Potrero 3", farm: farm);
+    track.paddockId= 1;
+    track.paddockDesc="Potrero 1";
+    track.farmId=1;
     track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-08-10 10:30:00");
-    track.farm=farm;
-    tracks.add(track);
-
-    track = Track(id:10);
-    track.paddock = Paddock(id:1,name:"Potrero 1", farm: farm);
-    track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-09-09 08:30:00");
-    track.farm=farm;
-    tracks.add(track);
-
-    track = Track(id:11);
-    track.paddock = Paddock(id:2,name:"Potrero 2", farm: farm);
-    track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-09-09 10:30:00");
-    track.farm=farm;
-    tracks.add(track);
-
-    track = Track(id:12);
-    track.paddock = Paddock(id:4,name:"Potrero 3", farm: farm);
-    track.datetime = DateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-09-10 10:30:00");
-    track.farm=farm;
     tracks.add(track);
 
   }
@@ -89,7 +76,7 @@ class TrackInMemory implements TrackRepository{
 
     });
 
-    return tracks.where((element) => ((element.farm?.id??0)==farm.id)).toList();
+    return tracks.where((element) => ((element.farmId??0)==farm.id)).toList();
   }
 
   @override

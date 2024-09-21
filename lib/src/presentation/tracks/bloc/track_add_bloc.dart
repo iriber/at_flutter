@@ -71,7 +71,7 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
 
     //TODO validate;
 
-    emit(state.copyWithoutMessage(status: () => TrackAddStatus.dateSuccess));
+    emit(state.copyWithoutMessage(status: () => TrackAddStatus.editAnimalTracks));
 
 
   }
@@ -86,8 +86,8 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
    Farm farm = await SharedPrefUtils().getSelectedFarm();
    
    Track track = event.getForm().buildTrack();
-   track.user = user;
-   track.farm = farm;
+   track.userId = user.id;
+   track.farmId = farm.id;
    
     
    await _service.addTrack(track).then((result) async {

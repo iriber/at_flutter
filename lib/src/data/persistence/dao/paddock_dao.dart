@@ -14,12 +14,10 @@ class PaddockDAO extends FionaDAO<Paddock>{
   @override
   Paddock fromMap(Map<String, Object?> entity) {
 
-    Farm farm = Farm(id: (entity["farmId"]??0) as int);
-
     return Paddock(
         id: (entity["id"]??0) as int,
         name: (entity["name"]??"").toString(),
-        farm: farm,
+        farmId: (entity["farmId"]??0) as int,
         );
   }
 
@@ -33,7 +31,7 @@ class PaddockDAO extends FionaDAO<Paddock>{
     return {
         'id':(entity.id>0)?entity.id:null,
         'name':entity.name,
-        'farmId':(entity.farm?.id??0),
+        'farmId':entity.farmId??0,
 
     };
 

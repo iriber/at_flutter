@@ -28,7 +28,7 @@ class TrackListItem extends StatelessWidget {
           contentPadding:
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           leading: const Icon(Icons.account_circle),
-          title: Text( track.paddock?.name??""),
+          title: Text( track.paddockDesc??""),
           //title: _buildPercentage(context),
           subtitle: Text( ATDateUtils().format(track.datetime, pattern: "E dd/MM")),
           //trailing: const Icon(Icons.arrow_forward),
@@ -44,28 +44,7 @@ class TrackListItem extends StatelessWidget {
       child: card,
     );
 
-    Widget body = ListTile(
-      title: Text(track.paddock?.name??"", style: TextStyle(color: Environment().config.appTheme.getTertiaryForegroundColor()),
-      ),
-    );
 
-
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-          color: Environment().config.appTheme.getTertiaryBackgroundColor(),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        elevation: 5,
-        //color: Colors.cyan,
-        child:
-        GestureDetector(
-          onTap: (){
-            //this.onSelect(context, this.company);
-          },
-          child: body,
-        )
-      ),
-      );
   }
 
   Widget _buildPercentage(BuildContext context){

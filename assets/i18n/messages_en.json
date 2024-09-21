@@ -2,5 +2,19 @@
   "login": "Login",
   "register": "Register",
 
-  "companySelect.title": "Elige un Campo"
+  "start": "Iniciar",
+  "next": "Siguiente",
+  "previous": "Anterior",
+
+  "companySelect.title": "Elige un Campo",
+
+  "tracks.title": "Recorridas",
+  "tracks.add.title": "Recorriendo el campo $",
+
+  "track.livestock": "Ganadería",
+  "track.agriculture": "Agricultura",
+
+  "track.animal": "Animal",
+  "track.food": "Alimento",
+  "track.water": "Agua"
 }
