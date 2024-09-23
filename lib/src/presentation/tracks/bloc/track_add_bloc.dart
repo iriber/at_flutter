@@ -63,7 +63,6 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
 
     emit(state.copyWithoutMessage(status: () => TrackAddStatus.selectLivestockType));
 
-
   }
 
   Future<void> _onTrackSetLivestockTypeRequested(
