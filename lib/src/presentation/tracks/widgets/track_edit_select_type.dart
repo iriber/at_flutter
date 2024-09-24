@@ -4,6 +4,7 @@ import 'package:agro_tracking_flutter/src/dependency_manager.dart';
 import 'package:agro_tracking_flutter/src/domain/app_theme.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
+import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/presentation/helpers/paddock_select_controller.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_events.dart';
@@ -75,6 +76,8 @@ class TrackEditSelectType extends StatelessWidget{
         GestureDetector(
           onTap: (){
             TrackForm form = this.getForm(context);
+            form.trackType = TrackType.livestock;
+            form.trackLivestockType = null;
             BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(form)));
           },
           child: _buildLink(context, Fionai18n.message("track.livestock"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow),
@@ -86,6 +89,8 @@ class TrackEditSelectType extends StatelessWidget{
         GestureDetector(
           onTap: (){
             TrackForm form = this.getForm(context);
+            form.trackType = TrackType.agriculture;
+            form.trackLivestockType = null;
             BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(form)));
           },
           child: _buildLink(context, Fionai18n.message("track.agriculture"), ATIcons().getIconFood(appTheme.getBodyForegroundColor(), 100), 1, Colors.green),

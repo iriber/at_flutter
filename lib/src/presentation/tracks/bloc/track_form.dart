@@ -1,8 +1,10 @@
 
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/track.dart';
+import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/utils/forms/form_object_item.dart';
 import 'package:fiona_i18n/fiona_i18n.dart';
+import 'package:flutter/gestures.dart';
 
 class TrackForm{
 
@@ -10,6 +12,9 @@ class TrackForm{
   FormObjectItem _date = FormObjectItem();
   FormObjectItem _time = FormObjectItem();
 
+  TrackType? trackType;
+  TrackLivestockType? trackLivestockType;
+  List<TrackAnimal>? tracks;
 
   TrackForm(this._paddock, this._date, this._time);
 
@@ -45,6 +50,36 @@ class TrackForm{
     track.datetime = date;
 
     return track;
+  }
+
+  void editTrackAnimal(TrackAnimal trackAnimal){
+    if(tracks==null){
+      tracks = List.empty(growable: true);
+      tracks?.add(trackAnimal);
+    }else{
+      //check if exists.
+      bool exists = false;
+      TrackAnimal? previous;
+      tracks?.forEach((element) {
+        exists = (element.typeId == trackAnimal.typeId);
+        if(exists){
+          previous = element;
+        }
+      });
+
+      if(exists){
+        previous?.quantity = trackAnimal.quantity;
+        previous?.minWeight = trackAnimal.minWeight;
+        previous?.maxWeight = trackAnimal.maxWeight;
+        previous?.avgWeight = trackAnimal.avgWeight;
+        //previous?.typeId = trackAnimal.typeId;
+        //previous?.typeDesc = trackAnimal.typeDesc;
+      }else{
+        tracks?.add(trackAnimal);
+      }
+
+    }
+    //tracks?.add(trackAnimal);
   }
 
 }

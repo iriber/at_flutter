@@ -22,6 +22,8 @@ class TracksState extends Equatable {
     TracksStatus Function()? status,
     List<Track> Function()? tracks,
     Farm Function()? farm,
+    TrackType Function()? trackType,
+    TrackLivestockType Function()? trackLivestockType,
     String Function()? message
   }) {
     return TracksState(
@@ -35,7 +37,7 @@ class TracksState extends Equatable {
   TracksState copyWithoutMessage({
     TracksStatus Function()? status,
     List<Track> Function()? tracks,
-    Farm Function()? farm
+    Farm Function()? farm,
   }) {
     return TracksState(
       status: status != null ? status() : this.status,
@@ -49,7 +51,7 @@ class TracksState extends Equatable {
     status,
     tracks,
     farm,
-    message
+    message,
   ];
   
 }

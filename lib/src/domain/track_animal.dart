@@ -9,7 +9,10 @@ import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackAnimal extends GenericModel{
 
-  AnimalType? type;
+
+  int? typeId;
+  String? typeDesc;
+
   int? quantity;
   double? minWeight;
   double? maxWeight;
@@ -31,7 +34,7 @@ class TrackAnimal extends GenericModel{
 
 
   TrackAnimal(
-      {int id=-1, this.type, this.trackId,
+      {int id=-1, this.typeId, this.typeDesc, this.trackId,
       this.quantity}):super(id);
 
   TrackAnimal.empty():super(-1);
@@ -43,12 +46,17 @@ class TrackAnimal extends GenericModel{
   TrackAnimal.fromJson(dynamic item):super(item["id"]) {
     //name=item["name"]??"";
     trackId = item["trackId"];
+    typeId = item["typeId"];
+    typeDesc = item["typeDesc"];
+    quantity = item["quantity"];
   }
 
   Map<String, Object> toMap(){
     return {
       'id':id,
       'trackId':trackId??"",
+      'typeId':typeId??"",
+      'quantity':quantity??"",
 
     };
   }

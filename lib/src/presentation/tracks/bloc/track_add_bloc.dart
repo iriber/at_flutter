@@ -1,7 +1,10 @@
+import 'package:agro_tracking_flutter/src/domain/animal_type.dart';
+import 'package:agro_tracking_flutter/src/domain/lockup.dart';
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/services/facade_service.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/track.dart';
+import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_state.dart';
@@ -28,6 +31,7 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
     on<TrackSetDateRequested>(_onTrackSetDateRequested);
     on<TrackSetTrackTypeRequested>(_onTrackSetTrackTypeRequested);
     on<TrackSetLivestockTypeRequested>(_onTrackSetLivestockTypeRequested);
+    on<TrackLivestockTrackAnimalRequested>(_onTrackLivestockTrackAnimalRequested);
 
     on<TrackAddRequested>(_onTrackAddRequested);
 
@@ -37,11 +41,15 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
       InitTrackAddRequested event, Emitter<TrackAddState> emit) async {
 
     Farm farm = await SharedPrefUtils().getSelectedFarm();
-    
+
+    TrackForm form = event.getForm()??TrackForm.empty();
+    form.trackType = null;
+    form.trackLivestockType = null;
+
     emit(state.copyWithoutMessage(
         status: () => TrackAddStatus.initial,
         farm: () => farm,
-        form: () => event.getForm()??TrackForm.empty()
+        form: () => form
     ));
 
   }
@@ -49,19 +57,30 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
   Future<void> _onTrackSetDateRequested(
       TrackSetDateRequested event, Emitter<TrackAddState> emit) async {
 
-    //TODO validate;
+    TrackForm form = event.getForm()??TrackForm.empty();
+    form.trackType = null;
+    form.trackLivestockType = null;
 
-    emit(state.copyWithoutMessage(status: () => TrackAddStatus.selectTrackType));
-
-
+    emit(state.copyWithoutMessage(
+        status: () => TrackAddStatus.selectTrackType,
+        form: () => form
+    )
+    );
   }
 
   Future<void> _onTrackSetTrackTypeRequested(
       TrackSetTrackTypeRequested event, Emitter<TrackAddState> emit) async {
 
     //TODO validate;
-
-    emit(state.copyWithoutMessage(status: () => TrackAddStatus.selectLivestockType));
+    TrackForm form = event.getForm();
+    form.trackType = TrackType.livestock;
+    form.trackLivestockType = null;
+    emit(
+        state.copyWithoutMessage(
+            status: () => TrackAddStatus.selectLivestockType,
+            form: () => form
+        )
+    );
 
   }
 
@@ -69,9 +88,27 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
       TrackSetLivestockTypeRequested event, Emitter<TrackAddState> emit) async {
 
     //TODO validate;
+    TrackForm form = event.getForm();
+    form.trackLivestockType = TrackLivestockType.animal;
 
     emit(state.copyWithoutMessage(status: () => TrackAddStatus.editAnimalTracks));
 
+
+  }
+
+  Future<void> _onTrackLivestockTrackAnimalRequested(
+      TrackLivestockTrackAnimalRequested event, Emitter<TrackAddState> emit) async {
+
+    //TODO validate;
+    TrackForm form = state.form??TrackForm.empty();
+    form.editTrackAnimal(event.getTrackAnimal());
+
+    emit(
+        state.copyWithoutMessage(
+            status: () => TrackAddStatus.editAnimalTracks,
+            form: () => form
+        )
+    );
 
   }
 

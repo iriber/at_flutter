@@ -9,7 +9,7 @@
   "companySelect.title": "Elige un Campo",
 
   "tracks.title": "Recorridas",
-  "tracks.add.title": "Recorriendo el campo $",
+  "tracks.add.title": "Recorriendo {farm}",
 
   "track.livestock": "Ganadería",
   "track.agriculture": "Agricultura",

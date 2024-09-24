@@ -11,7 +11,9 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.da
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_state.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_animal.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_edit_animal.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_edit_animal_list.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_breadcrumb.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_type.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_set_date.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_livestock_select_type.dart';
@@ -29,7 +31,7 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
   String? title;
 
   TrackAddPage(BuildContext context, {Key? key}) : super(key: key) {
-   BlocProvider.of<TrackAddBloc>(context).add((const InitTrackAddRequested()));
+   //BlocProvider.of<TrackAddBloc>(context).add((const InitTrackAddRequested()));
    //DependencyManager().get<CompanySelectBloc>().add((const FetchAllCompaniesRequested()));
   }
 
@@ -93,6 +95,8 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
               bodyWidget = const Center();
             }
           }
+
+          _setTitle(context,state);
           return Container(
             //color: Environment().config.appTheme.getBodyBackgroundColor() ,
               child: bodyWidget
@@ -102,7 +106,8 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
   }
 
   String getTitle(){
-    return Fionai18n.message("tracks.add.title");
+
+    return Fionai18n.message("tracks.add.title").replaceAll("{farm}", "");;
   }
 
 
@@ -111,29 +116,73 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
   }
 
   Widget _buildFormStep1(BuildContext context, TrackAddState state) {
+
+
+
     return TrackEditSetDate(state);
   }
 
   Widget _buildFormStep2(BuildContext context, TrackAddState state) {
-    Paddock? paddock = (state.form?.getPaddock().getValue()?? Paddock.empty()) as Paddock?;
-    if(paddock!=null && paddock.name.isNotEmpty){
-      String subtitle = paddock.name;
-      NavAppTitle.changeTitle(context, getTitle(), subtitle:  subtitle);
-    }
+
     return TrackEditSelectType(state);
   }
 
   Widget _buildFormStep3(BuildContext context, TrackAddState state) {
-    Paddock? paddock = (state.form?.getPaddock().getValue()?? Paddock.empty()) as Paddock?;
-    if(paddock!=null && paddock.name.isNotEmpty){
-      String subtitle = paddock.name;
-      NavAppTitle.changeTitle(context, getTitle(), subtitle:  subtitle);
-    }
-    return TrackEditLivestockSelectType(state);
+
+    return Column(
+      children: [
+        Expanded(child: _buildBreadcrumb(context,state ),flex: 1,),
+        Expanded(child: TrackEditLivestockSelectType(state),flex: 9,)
+    ]);
   }
 
   Widget _buildFormStepEditTrackAnimals(BuildContext context, TrackAddState state) {
 
-    return TrackEditAnimal();
+
+    return Column(
+        children: [
+          Expanded(child: _buildBreadcrumb(context,state ), flex: 1,),
+          Expanded(child: TrackEditAnimalList(state),flex: 9,)
+        ]);
+
+  }
+
+  void _setTitle(BuildContext context, TrackAddState state) {
+    String title = Fionai18n.message("tracks.add.title");
+    title=title.replaceAll("{farm}", state.farm?.name??"");
+    NavAppTitle.changeTitle(context, title);
+
+  }
+
+  TrackEditBreadcrumb _buildBreadcrumb(BuildContext context, TrackAddState state) {
+    List<TrackEditBreadcrumbItem> items = List.empty(growable: true);
+
+    Paddock? paddock = (state.form?.getPaddock().getValue()?? Paddock.empty()) as Paddock?;
+    if(paddock!=null && paddock.name.isNotEmpty){
+      items.add(TrackEditBreadcrumbItem(paddock.name));
+    }
+
+    switch( state.form?.trackType ){
+      case null:
+      // TODO: Handle this case.
+      case TrackType.livestock:
+        items.add(TrackEditBreadcrumbItem("Ganadería"));
+      case TrackType.agriculture:
+        items.add(TrackEditBreadcrumbItem("Agricultura"));
+
+    }
+
+    switch( state.form?.trackLivestockType ){
+      case null:
+      // TODO: Handle this case.
+      case TrackLivestockType.animal:
+        items.add(TrackEditBreadcrumbItem("Animal"));
+      case TrackLivestockType.food:
+        items.add(TrackEditBreadcrumbItem("Alimento"));
+      case TrackLivestockType.water:
+        items.add(TrackEditBreadcrumbItem("Agua"));
+    }
+
+    return TrackEditBreadcrumb(breadcrumbs: items);
   }
 }

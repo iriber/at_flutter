@@ -11,8 +11,10 @@ import 'package:agro_tracking_flutter/src/presentation/menu/menu_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/app_title/bloc/app_title_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/splashscreen.dart';
 import 'package:agro_tracking_flutter/src/presentation/styles/at_theme_data.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_bloc.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/tracks_page.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +71,9 @@ class _ATAppState extends State<ATApp> {
         BlocProvider<TrackAddBloc>(
           create: (context) => TrackAddBloc(),
         ),
+        BlocProvider<TrackAddAnimalBloc>(
+          create: (context) => TrackAddAnimalBloc(),
+        ),
       ],
       child: _buildMaterialApp(context),
     );
@@ -112,6 +117,14 @@ class _ATAppState extends State<ATApp> {
                   pageBuilder: (context, state) {
                     return customTransition(context, state, TrackAddPage(context));
                   },
+                    routes: [
+                      GoRoute(
+                        path:  "animal-add",//PagesConfig.trackingAddLink,
+                        pageBuilder: (context, state) {
+                          return customTransition(context, state, TrackAddAnimalCategoryPage(context));
+                        },
+                      ),
+                    ]
                 ),
               ],
             ),
@@ -120,6 +133,13 @@ class _ATAppState extends State<ATApp> {
             //TODO check if the user is logged, else return "signin"
           }*/
         ),
+        /*
+        GoRoute(
+          path: PagesConfig.trackingAnimalAddLink,
+          builder: (context, state) {
+            return TrackAddAnimalCategoryPage(context);
+          },
+        ),*/
 
         GoRoute(
           path: PagesConfig.selectFarmLink,

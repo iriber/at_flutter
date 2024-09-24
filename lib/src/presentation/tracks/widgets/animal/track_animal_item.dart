@@ -19,7 +19,9 @@ class TrackAnimalItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Widget body = ListTile(
-      title: Text(trackAnimal.type?.type?.label??"", style: TextStyle(color: Environment().config.appTheme.getTertiaryForegroundColor()),
+      trailing: Text("${trackAnimal.quantity??0}"),
+      title: Text(trackAnimal.typeDesc??"", style: TextStyle(color: Environment().config.appTheme.getTertiaryForegroundColor()),
+
       ),
     );
 

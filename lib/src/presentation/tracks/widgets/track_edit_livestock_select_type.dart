@@ -4,6 +4,7 @@ import 'package:agro_tracking_flutter/src/dependency_manager.dart';
 import 'package:agro_tracking_flutter/src/domain/app_theme.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
+import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/presentation/helpers/paddock_select_controller.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_events.dart';
@@ -61,6 +62,7 @@ class TrackEditLivestockSelectType extends StatelessWidget{
         GestureDetector(
           onTap: (){
             TrackForm form = this.getForm(context);
+            form.trackLivestockType = TrackLivestockType.animal;
             BlocProvider.of<TrackAddBloc>(context).add((TrackSetLivestockTypeRequested(form)));
           },
           child: _buildLink(context, Fionai18n.message("track.animal"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow)
@@ -132,7 +134,7 @@ class TrackEditLivestockSelectType extends StatelessWidget{
   Widget _buildLink(BuildContext context, String title, Widget icon, double percentage, Color color ) {
     return Container(
       //color: Colors.grey,
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
