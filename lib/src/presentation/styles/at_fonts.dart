@@ -94,11 +94,24 @@ class ATFonts{
       fontSize: 16);
 
   TextStyle? get inputText => TextStyle(
+
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
       color: Environment().config.appTheme.getBodyForegroundColor(),
       fontSize: 18);
 
+  TextStyle? get inputLabel => TextStyle(
+
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w400,
+      color: Environment().config.appTheme.getBodyForegroundColor(),
+      fontSize: 18);
+
+  TextStyle? get inputErrorText => TextStyle(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w600,
+      color: Environment().config.appTheme.getErrorBackgroundColor(),
+      fontSize: 14);
 
   TextStyle? getButtonText({Color? color, double? fontSize }) => TextStyle(
       fontFamily: fontFamily,

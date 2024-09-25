@@ -25,11 +25,13 @@ class TrackAnimalForm{
   String? getError() => _error;
 
   bool validate(){
-    bool isValid=true;
-    //isValid = isValid && !this._email.checkEmpty(msg:Fionai18n.message("email.required"));
-    //isValid = isValid && !this._password.checkEmpty(msg:Fionai18n.message("password.required"));
+    bool animalRequired =  _animalType.checkEmpty(msg:Fionai18n.message("animalType.required"));
+    bool quantityRequired = this._quantity.checkEmpty(msg:Fionai18n.message("quantity.required"));
+    if(animalRequired || quantityRequired ){
+      _error = Fionai18n.message("fields.required");
+    }
     //_error = Fionai18n.message("fields.required");
-    return isValid;
+    return !animalRequired && !quantityRequired;
   }
 
   TrackAnimalForm.empty() {
@@ -78,9 +80,9 @@ class TrackAnimalForm{
     int quantity = _quantity.getValue() as int;
     track.quantity = quantity;
 
-    double minWeight = _minWeight.getValue() as double;
-    double maxWeight = _maxWeight.getValue() as double;
-    double avgWeight = _avgWeight.getValue() as double;
+    double? minWeight = getMinWeightValue();
+    double? maxWeight = getMaxWeightValue();
+    double? avgWeight = getAvgWeightValue();
 
     track.avgWeight = avgWeight;
     track.maxWeight = maxWeight;

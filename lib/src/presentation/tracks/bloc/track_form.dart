@@ -60,12 +60,15 @@ class TrackForm{
       //check if exists.
       bool exists = false;
       TrackAnimal? previous;
-      tracks?.forEach((element) {
+
+      for(var element in (tracks??List.empty())){
         exists = (element.typeId == trackAnimal.typeId);
         if(exists){
           previous = element;
+          break;
         }
-      });
+      }
+
 
       if(exists){
         previous?.quantity = trackAnimal.quantity;

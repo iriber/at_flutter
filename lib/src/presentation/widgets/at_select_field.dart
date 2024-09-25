@@ -184,14 +184,19 @@ decoration: InputDecoration(
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-                color: (hasError)?appTheme.getErrorBackgroundColor():appTheme.getBodyForegroundColor(),
+                color: appTheme.getBodyForegroundColor(),
                 width: 1.0),
           ),
           labelStyle: ATFonts().regularText,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           border: OutlineInputBorder(),
-          //prefix: VerticalDivider(width: 10,),
-          //labelText: "  $label",
+          errorBorder: hasError?OutlineInputBorder(
+            borderSide: BorderSide(
+                color: appTheme.getErrorBackgroundColor(),
+                width: 1.0),
+          ):null,
+          errorText: hasError?widget.error:null,
+          errorStyle: ATFonts().inputErrorText
 
         ),
         isEmpty: selectedValue == null,

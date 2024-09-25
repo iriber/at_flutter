@@ -1,7 +1,10 @@
+import 'package:agro_tracking_flutter/src/config/enviroment.dart';
 import 'package:agro_tracking_flutter/src/domain/animal_type.dart';
+import 'package:agro_tracking_flutter/src/domain/app_theme.dart';
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/presentation/layouts/at_appbar_layout.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/nav_helper.dart';
+import 'package:agro_tracking_flutter/src/presentation/styles/at_fonts.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_state.dart';
@@ -47,7 +50,32 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
   }
 
 
-
+  SnackBar _buildSnackBar(msg){
+    AppTheme appTheme = Environment().config.appTheme;
+    return SnackBar(
+      content: _buildMsg(msg),
+      backgroundColor:  appTheme.getErrorBackgroundColor(),
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 2 ),
+      elevation: 20,
+      margin: EdgeInsets.only(
+          right: 20,
+          left: 20,
+          bottom: 250//(MediaQuery.of(context).size.height/2)
+      ),
+    );
+  }
+  Widget _buildMsg(msg){
+    AppTheme appTheme = Environment().config.appTheme;
+    return
+      Container(
+        color: appTheme.getErrorBackgroundColor(),
+        padding: const EdgeInsets.fromLTRB(40,10,40,10),
+        child: Text(msg,
+            textAlign: TextAlign.center,
+            style: ATFonts().errorText),
+      );
+  }
   @override
   Widget buildBody(BuildContext context) {
 
@@ -60,9 +88,10 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
               BlocProvider.of<TrackAddBloc>(context).add(TrackLivestockTrackAnimalRequested(trackAnimal));
               NavHelper().back(context);
             }break;
-          /*case TrackAddStatus.failure:{
+          case TrackAddAnimalStatus.failure:{
               //TODO show message.???
-            }break;*/
+            Environment().rootScaffoldMessengerKey.currentState?.showSnackBar(_buildSnackBar(state.message??"algo"));
+            }break;
           //TODO next step.
             default: break;
           }

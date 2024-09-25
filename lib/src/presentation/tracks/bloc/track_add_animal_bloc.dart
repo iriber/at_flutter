@@ -66,17 +66,18 @@ class TrackAddAnimalBloc extends Bloc<TrackAddAnimalEvents, TrackAddAnimalState>
 
 
   bool _checkFields(TrackAddAnimalRequested event) {
-  return true;
+
     bool hasError=!event.getForm().validate();
     if (hasError) {
       emit(
         state.copyWith(
             status: () => TrackAddAnimalStatus.failure,
+            message: ()  => event.getForm().getError()??"",
             form: () => event.getForm()),
       );
     }
 
-    return hasError;
+    return !hasError;
   }
 
 
