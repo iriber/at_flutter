@@ -23,10 +23,11 @@ class ATTextField extends StatelessWidget{
   TextStyle? labelStyle;
   TextStyle? inputStyle;
   int labelSize; /* between 1 and 10 */
+  TextAlign? labelAlign;
 
   List<TextInputFormatter>? inputFormatters;
 
-  ATTextField({this.labelSize=4,this.labelStyle, this.inputStyle, this.labelPosition=ATTextFieldLabelPosition.inside,this.inputTextAlign,this.inputFormatters, this.inputType, this.onChange,this.controller, required this.label, this.hideText=false, this.prefixIcon, this.error, this.initialValue, this.enabled=true});
+  ATTextField({this.labelAlign, this.labelSize=4,this.labelStyle, this.inputStyle, this.labelPosition=ATTextFieldLabelPosition.inside,this.inputTextAlign,this.inputFormatters, this.inputType, this.onChange,this.controller, required this.label, this.hideText=false, this.prefixIcon, this.error, this.initialValue, this.enabled=true});
 
   @override
   Widget build(BuildContext context) {
@@ -47,28 +48,43 @@ class ATTextField extends StatelessWidget{
   }
 
   Widget buildLabelTop(BuildContext context) {
+    bool hasError = !(error??"").isEmpty;
+    TextStyle? style = labelStyle?? ATFonts().inputLabel;
+    if(hasError){
+      style = ATFonts().inputLabelError;
+    }
     return Column(
 
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: labelStyle?? ATFonts().inputLabel,),
+        Text(label, style: style, textAlign: labelAlign,),
         SizedBox(height: 8,),
         buildInput(context)
       ],
     );
   }
   Widget buildLabelLeft(BuildContext context) {
+
+    bool hasError = !(error??"").isEmpty;
+    TextStyle? style = labelStyle?? ATFonts().inputLabel;
+    if(hasError){
+      style = ATFonts().inputLabelError;
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(child: Text(label, style: labelStyle?? ATFonts().inputLabel,), flex: labelSize)
-        ,
-        Expanded(child: buildInput(context), flex:(10-labelSize))
+        Expanded(child:
+          Padding(padding: EdgeInsets.only(right:8), child:
+          Text(label, style: style,textAlign: labelAlign,)),
+            flex: labelSize
+        ),
+        Expanded(child: buildInput(context, hideLabel:true), flex:(10-labelSize))
       ],
     );
   }
 
-  Widget buildInput(BuildContext context) {
+  Widget buildInput(BuildContext context, {bool hideLabel=false}) {
     AppTheme appTheme = Environment().config.appTheme;
     bool hasError = !(error??"").isEmpty;
 
@@ -96,11 +112,11 @@ class ATTextField extends StatelessWidget{
                 color: appTheme.getBodyForegroundColor(),
                 width: 1.0),
           ),
-          labelStyle: ATFonts().regularText,
+          labelStyle: ATFonts().inputLabel,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           border: OutlineInputBorder(),
           prefix: VerticalDivider(width: 10,),
-          labelText: "  $label",
+          labelText:  (hideLabel)?null: "  $label",
           errorBorder: hasError?OutlineInputBorder(
             borderSide: BorderSide(
                 color: appTheme.getErrorBackgroundColor(),

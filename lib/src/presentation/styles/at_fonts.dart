@@ -107,6 +107,14 @@ class ATFonts{
       color: Environment().config.appTheme.getBodyForegroundColor(),
       fontSize: 18);
 
+
+  TextStyle? get inputLabelError => TextStyle(
+
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w400,
+      color: Environment().config.appTheme.getErrorBackgroundColor(),
+      fontSize: 18);
+
   TextStyle? get inputErrorText => TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w600,

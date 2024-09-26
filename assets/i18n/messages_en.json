@@ -6,6 +6,8 @@
   "next": "Siguiente",
   "previous": "Anterior",
 
+  "fields.required": "Complete los campos requeridos",
+
   "companySelect.title": "Elige un Campo",
 
   "tracks.title": "Recorridas",
@@ -16,5 +18,18 @@
 
   "track.animal": "Animal",
   "track.food": "Alimento",
-  "track.water": "Agua"
+  "track.water": "Agua",
+
+  "track.animal.add": "Agregar Categoría",
+  "track.animal.category": "Categoría",
+  "track.animal.corporalCapacity": "C.Corporal",
+  "track.animal.sanityPlan": "Plan Sanitario",
+  "track.animal.media": "Fotos/Videos",
+  "track.animal.type": "Categoría",
+  "animalType.required": "Indique la categoría",
+  "track.animal.quantity": "Cantidad",
+  "quantity.required": "Indique la cantidad",
+  "track.animal.minWeight": "Peso mínimo",
+  "track.animal.maxWeight": "Peso máximo",
+  "track.animal.avgWeight": "Peso promedio"
 }

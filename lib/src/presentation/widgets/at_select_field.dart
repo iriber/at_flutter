@@ -205,7 +205,7 @@ decoration: InputDecoration(
           style: ATFonts().inputText,
           //icon: widget.prefixIcon??widget.prefixIcon,
           value: widget.selectFieldController.selected,
-          hint: Text( label ),
+          hint: Text( "  $label" ),
           items: items.map((dynamic option) {
             return DropdownMenuItem<dynamic>(
               value: option,

@@ -24,13 +24,13 @@ class TrackAnimalCategoryTab extends StatelessWidget{
 
   TrackAnimalCategoryTab(this.state) {
     animalTypeSelectController = AnimalTypeSelectController();
-    animalType = this.state.form?.getAnimalTypeValue();
+    animalType = this.state.form?.getAnimalType().getValue();
     animalTypeSelectController.setSelected(animalType);
 
-    quantityController.text =  this.state.form?.getQuantityValue()?.toString()??"" ;
-    minWeightController.text =  this.state.form?.getMinWeightValue()?.toString()??"" ;
-    maxWeightController.text =  this.state.form?.getMaxWeightValue()?.toString()??"" ;
-    avgWeightController.text =  this.state.form?.getAvgWeightValue()?.toString()??"" ;
+    quantityController.text =  this.state.form?.getQuantity().getValue()?.toString()??"" ;
+    minWeightController.text =  this.state.form?.getMinWeight().getValue()?.toString()??"" ;
+    maxWeightController.text =  this.state.form?.getMaxWeight().getValue()?.toString()??"" ;
+    avgWeightController.text =  this.state.form?.getAvgWeight().getValue()?.toString()??"" ;
   }
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class TrackAnimalCategoryTab extends StatelessWidget{
         selectFieldController: animalTypeSelectController,
         label: Fionai18n.message("track.animal.type"),
         error: state.form?.getAnimalType().errorMessage,
-        prefixIcon: ATIcons().inputTextIconEmail(),
+       // prefixIcon: ATIcons().inputTextIconEmail(),
       ),
     ));
 
@@ -59,13 +59,15 @@ class TrackAnimalCategoryTab extends StatelessWidget{
       padding: const EdgeInsets.all(10),
       child: ATTextField(
         labelPosition: ATTextFieldLabelPosition.left,
+        labelAlign: TextAlign.end,
+        labelSize: 6,
         inputTextAlign: TextAlign.right,
         inputType: TextInputType.number,
         controller: quantityController,
         enabled: (!isSending),
         label: Fionai18n.message("track.animal.quantity"),
         error: state.form?.getQuantity().errorMessage,
-        prefixIcon: ATIcons().inputTextIconHashtag(),
+        //prefixIcon: ATIcons().inputTextIconHashtag(),
       ),
     ));
 
@@ -73,57 +75,50 @@ class TrackAnimalCategoryTab extends StatelessWidget{
     widgets.add(Container(
         padding: const EdgeInsets.all(10),
         child:ATTextField(
-          labelPosition: ATTextFieldLabelPosition.top,
+          labelPosition: ATTextFieldLabelPosition.left,
+          labelSize: 6,
+          labelAlign: TextAlign.end,
           inputTextAlign: TextAlign.right,
           inputType: TextInputType.number,
           controller: minWeightController,
           enabled: (!isSending),
           label: Fionai18n.message("track.animal.minWeight"),
           error: state.form?.getMinWeight().errorMessage,
-          prefixIcon: ATIcons().inputTextIconHashtag(),
+          //prefixIcon: ATIcons().inputTextIconHashtag(),
         ))
     );
 
     widgets.add(Container(
       padding: const EdgeInsets.all(10),
       child:ATTextField(
+        labelPosition: ATTextFieldLabelPosition.left,
+        labelSize: 6,
+        labelAlign: TextAlign.end,
         inputTextAlign: TextAlign.right,
         inputType: TextInputType.number,
               controller: maxWeightController,
               enabled: (!isSending),
               label: Fionai18n.message("track.animal.maxWeight"),
               error: state.form?.getMaxWeight().errorMessage,
-              prefixIcon: ATIcons().inputTextIconHashtag(),
+             // prefixIcon: ATIcons().inputTextIconHashtag(),
             ))
     );
 
     widgets.add(Container(
         padding: const EdgeInsets.all(10),
         child:ATTextField(
+          labelPosition: ATTextFieldLabelPosition.left,
+          labelSize: 6,
+          labelAlign: TextAlign.end,
           inputTextAlign: TextAlign.right,
           inputType: TextInputType.number,
           controller: avgWeightController,
           enabled: (!isSending),
           label: Fionai18n.message("track.animal.avgWeight"),
           error: state.form?.getAvgWeight().errorMessage,
-          prefixIcon: ATIcons().inputTextIconHashtag(),
+          //prefixIcon: ATIcons().inputTextIconHashtag(),
         ))
     );
-/*
-    widgets.add(
-        Container(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 80),
-            child: ATPrimaryButton(
-                label: (isSending?Fionai18n.message("sending"):Fionai18n.message("login")),
-                onTap:(BuildContext context){
-                  if(!isSending){
-                    doSave(context);
-                  }
-                }
-            )
-        )
-    );
-*/
 
 
     return Container(
@@ -145,29 +140,12 @@ class TrackAnimalCategoryTab extends StatelessWidget{
 
   void fillForm(TrackAnimalForm form) {
 
-    //TrackAnimalForm form = this.state.form??TrackAnimalForm.empty();
-
     AnimalType? animalType = animalTypeSelectController.getSelected();
     form.getAnimalType().setValue( animalType );
-
-    String strQuantity =   quantityController.text;
-    int? quantity;
-    try{quantity = int.parse(strQuantity);}catch(error){}
-    double? min,max,avg;
-    try{min = double.parse(minWeightController.text);}catch(error){}
-    try{max = double.parse(maxWeightController.text);}catch(error){}
-    try{avg = double.parse(avgWeightController.text);}catch(error){}
-    form.getQuantity().setValue( quantity );
-    form.getMinWeight().setValue( min );
-    form.getMaxWeight().setValue( max );
-    form.getAvgWeight().setValue( avg );
-
-    debugPrint("Animal type: ${animalType?.type?.label}" );
-    debugPrint("Quantity: ${quantity}" );
-    debugPrint("Weight: ${min} ${max} ${avg}" );
-    //BlocProvider.of<TrackAddAnimalBloc>(context).add(TrackAddAnimalSetCategoryRequested(form));
-
-
+    form.getQuantity().parse( quantityController.text );
+    form.getMinWeight().parse( minWeightController.text );
+    form.getMaxWeight().parse( maxWeightController.text );
+    form.getAvgWeight().parse( avgWeightController.text );
 
   }
 
