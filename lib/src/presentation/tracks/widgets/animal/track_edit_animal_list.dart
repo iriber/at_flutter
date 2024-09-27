@@ -55,38 +55,11 @@ class TrackEditAnimalList extends StatelessWidget{
       children: [
         Expanded(
           child: buildCategories(context),
-          flex: 5),
-        Expanded(
-            child: buildFooter(context),
-            flex: 1),
+          flex: 10)
       ],
     ) ;
   }
 
-
-
-  Widget buildFooter(BuildContext context){
-    bool isSending = (this.state.status==LoginStatus.sending);
-    return
-        Container(
-            padding: const EdgeInsets.only(top: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ATPrimaryButton(
-                    width: 170,
-                    label: (isSending?Fionai18n.message("sending"):Fionai18n.message("previous")),
-                    onTap:(BuildContext context){
-                      if(!isSending){
-                        doPrevious(context);
-                      }
-                    }
-                )
-              ],
-            )
-        );
-
-  }
 
   Widget buildCategories(BuildContext context) {
 
@@ -101,7 +74,7 @@ class TrackEditAnimalList extends StatelessWidget{
               onSelect: (context, selected) {
                 TrackAnimalForm form = TrackAnimalForm.fromTrackAnimal(trackAnimal);
                 BlocProvider.of<TrackAddAnimalBloc>(context).add((InitTrackAnimalAddRequested(form: form)));
-                NavHelper().navToPageLink(context, PagesConfig.trackingAnimalAddLink);
+                NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsEditLink);
 
               },
             ),
@@ -113,7 +86,7 @@ class TrackEditAnimalList extends StatelessWidget{
                  label:Fionai18n.message("track.animal.add"),
                  onTap:(BuildContext context){
                      BlocProvider.of<TrackAddAnimalBloc>(context).add((const InitTrackAnimalAddRequested()));
-                     NavHelper().navToPageLink(context, PagesConfig.trackingAnimalAddLink);
+                     NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsEditLink);
                  }
              ),
            ),
@@ -122,7 +95,5 @@ class TrackEditAnimalList extends StatelessWidget{
     );
   }
 
-  void doPrevious(BuildContext context) {
-    BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(state.form??TrackForm.empty())));
-  }
+
 }

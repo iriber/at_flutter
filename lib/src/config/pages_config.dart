@@ -16,7 +16,8 @@ class PagesConfig {
   static const String selectFarmLink = '/select-farm';
   static const String trackingLink = '/home/tracking';
   static const String trackingAddLink = '/home/tracking/add';
-  static const String trackingAnimalAddLink = '/home/tracking/add/animal-add';
+  static const String trackingAddAnimalsLink = '/home/tracking/add/animals';
+  static const String trackingAddAnimalsEditLink = '/home/tracking/add/animals/edit';
 
   static const String sanityLink = '/sanity';
   static const String cowLink = '/cow';

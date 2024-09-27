@@ -8,10 +8,13 @@ enum TrackAddAnimalStatus {
 class TrackAddAnimalState extends Equatable {
 
   final TrackAddAnimalStatus status;
-  //final Farm? farm;
   final TrackAnimalForm? form;
 
   String? message;
+
+  TrackAnimal getTrackAnimal(){
+    return form?.buildTrackAnimal()??TrackAnimal.empty();
+  }
 
   TrackAddAnimalState({
     this.status = TrackAddAnimalStatus.initial,

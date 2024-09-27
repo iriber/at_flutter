@@ -40,10 +40,10 @@ class TrackSetLivestockTypeRequested extends TrackAddEvent {
 
 }
 
-class TrackLivestockTrackAnimalRequested extends TrackAddEvent {
+class TrackLivestockEditTrackAnimalRequested extends TrackAddEvent {
   final TrackAnimal _trackAnimal;
 
-  const TrackLivestockTrackAnimalRequested(this._trackAnimal);
+  const TrackLivestockEditTrackAnimalRequested(this._trackAnimal);
 
   TrackAnimal getTrackAnimal() => _trackAnimal;
 

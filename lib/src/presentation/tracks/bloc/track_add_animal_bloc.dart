@@ -55,9 +55,10 @@ class TrackAddAnimalBloc extends Bloc<TrackAddAnimalEvents, TrackAddAnimalState>
      emit(state.copyWithoutMessage(status: () => TrackAddAnimalStatus.sending));
 
      if(_checkFields(event)){
+
+
        emit(state.copyWithoutMessage(
-           status: () => TrackAddAnimalStatus.success,
-           form: () => event.form
+           status: () => TrackAddAnimalStatus.success
 
        ));
      }

@@ -61,9 +61,11 @@ class TrackEditLivestockSelectType extends StatelessWidget{
     widgets.add(
         GestureDetector(
           onTap: (){
+            NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsLink);
+            /*
             TrackForm form = this.getForm(context);
             form.trackLivestockType = TrackLivestockType.animal;
-            BlocProvider.of<TrackAddBloc>(context).add((TrackSetLivestockTypeRequested(form)));
+            BlocProvider.of<TrackAddBloc>(context).add((TrackSetLivestockTypeRequested(form)));*/
           },
           child: _buildLink(context, Fionai18n.message("track.animal"), ATIcons().getIconAnimal(appTheme.getBodyForegroundColor(), 100), 1, Colors.yellow)
         )

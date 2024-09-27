@@ -5,6 +5,7 @@ import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/presentation/layouts/at_appbar_layout.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/nav_helper.dart';
 import 'package:agro_tracking_flutter/src/presentation/styles/at_fonts.dart';
+import 'package:agro_tracking_flutter/src/presentation/styles/at_icons.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_state.dart';
@@ -15,6 +16,7 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/tra
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_breadcrumb.dart';
 import 'package:agro_tracking_flutter/src/presentation/widgets/at_button.dart';
 import 'package:agro_tracking_flutter/src/presentation/widgets/at_error_msg.dart';
+import 'package:agro_tracking_flutter/src/utils/at_messages_utils.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +38,7 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
 
     return PopScope(
 
-        child: ATAppBarLayout.likePopup(this, onClose: _onWillPop)
+        child: ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack, )
     );
 
   }
@@ -49,33 +51,6 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
     return true;
   }
 
-
-  SnackBar _buildSnackBar(msg){
-    AppTheme appTheme = Environment().config.appTheme;
-    return SnackBar(
-      content: _buildMsg(msg),
-      backgroundColor:  appTheme.getErrorBackgroundColor(),
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 2 ),
-      elevation: 20,
-      margin: EdgeInsets.only(
-          right: 20,
-          left: 20,
-          bottom: 250//(MediaQuery.of(context).size.height/2)
-      ),
-    );
-  }
-  Widget _buildMsg(msg){
-    AppTheme appTheme = Environment().config.appTheme;
-    return
-      Container(
-        color: appTheme.getErrorBackgroundColor(),
-        padding: const EdgeInsets.fromLTRB(40,10,40,10),
-        child: Text(msg,
-            textAlign: TextAlign.center,
-            style: ATFonts().errorText),
-      );
-  }
   @override
   Widget buildBody(BuildContext context) {
 
@@ -83,14 +58,12 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
         listener: (context, state) {
           switch(state.status){
             case TrackAddAnimalStatus.success:{
-              //TODO cierro y me voy al padre, tengo q avisar que agregué algo
-              TrackAnimal? trackAnimal = state.form?.buildTrackAnimal()??TrackAnimal.empty();
-              BlocProvider.of<TrackAddBloc>(context).add(TrackLivestockTrackAnimalRequested(trackAnimal));
+              //cierro y me voy al padre, tengo q avisar que agregué algo
+              BlocProvider.of<TrackAddBloc>(context).add(TrackLivestockEditTrackAnimalRequested(state.getTrackAnimal()));
               NavHelper().back(context);
             }break;
           case TrackAddAnimalStatus.failure:{
-              //TODO show message.???
-            Environment().rootScaffoldMessengerKey.currentState?.showSnackBar(_buildSnackBar(state.message??"algo"));
+            ATMessagesUtils.errorMessage(state.message);
             }break;
           //TODO next step.
             default: break;

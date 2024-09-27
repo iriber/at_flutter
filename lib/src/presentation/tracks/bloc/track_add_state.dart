@@ -6,7 +6,7 @@ enum TrackAddStatus {
   initial,
   dateSuccess, dateFailure,
   selectTrackType, selectLivestockType,
-  editAnimalTracks,
+
   sending, success, failure }
 
 class TrackAddState extends Equatable {

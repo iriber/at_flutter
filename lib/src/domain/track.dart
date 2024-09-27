@@ -9,8 +9,8 @@ import 'package:agro_tracking_flutter/src/domain/track_food.dart';
 import 'package:agro_tracking_flutter/src/domain/track_water.dart';
 import 'package:agro_tracking_flutter/src/domain/user.dart';
 
-enum TrackType { livestock, agriculture }
-enum TrackLivestockType { animal, food, water }
+enum TrackType { livestock, agriculture, empty }
+enum TrackLivestockType { animal, food, water, empty }
 
 class Track extends GenericModel{
 
