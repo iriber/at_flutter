@@ -2,6 +2,8 @@
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
+import 'package:agro_tracking_flutter/src/domain/track_food.dart';
+import 'package:agro_tracking_flutter/src/domain/track_water.dart';
 import 'package:agro_tracking_flutter/src/utils/forms/form_object_item.dart';
 import 'package:fiona_i18n/fiona_i18n.dart';
 import 'package:flutter/gestures.dart';
@@ -14,7 +16,9 @@ class TrackForm{
 
   TrackType? trackType;
   TrackLivestockType? trackLivestockType;
-  List<TrackAnimal>? tracks;
+  List<TrackAnimal>? tracksAnimal;
+  List<TrackFood>? tracksFood;
+  List<TrackWater>? tracksWater;
 
   TrackForm(this._paddock, this._date, this._time);
 
@@ -53,36 +57,51 @@ class TrackForm{
   }
 
   void editTrackAnimal(TrackAnimal trackAnimal){
-    if(tracks==null){
-      tracks = List.empty(growable: true);
-      tracks?.add(trackAnimal);
+    if(tracksAnimal==null){
+      tracksAnimal = List.empty(growable: true);
+      tracksAnimal?.add(trackAnimal);
     }else{
       //check if exists.
       bool exists = false;
       TrackAnimal? previous;
 
-      for(var element in (tracks??List.empty())){
+      for(var element in (tracksAnimal??List.empty())){
         exists = (element.typeId == trackAnimal.typeId);
         if(exists){
           previous = element;
           break;
         }
       }
-
-
       if(exists){
-        previous?.quantity = trackAnimal.quantity;
-        previous?.minWeight = trackAnimal.minWeight;
-        previous?.maxWeight = trackAnimal.maxWeight;
-        previous?.avgWeight = trackAnimal.avgWeight;
-        //previous?.typeId = trackAnimal.typeId;
-        //previous?.typeDesc = trackAnimal.typeDesc;
+        previous?.updateWith(trackAnimal);
       }else{
-        tracks?.add(trackAnimal);
+        tracksAnimal?.add(trackAnimal);
       }
-
     }
-    //tracks?.add(trackAnimal);
+  }
+
+  void editTrackFood(TrackFood trackFood){
+    if(tracksFood==null){
+      tracksFood = List.empty(growable: true);
+      tracksFood?.add(trackFood);
+    }else{
+      //check if exists.
+      bool exists = false;
+      TrackFood? previous;
+      for(var element in (tracksFood??List.empty())){
+        exists = (element.lotId == trackFood.lotId);
+        if(exists){
+          previous = element;
+          break;
+        }
+      }
+      if(exists){
+        previous?.updateWith(trackFood);
+
+      }else{
+        tracksFood?.add(trackFood);
+      }
+    }
   }
 
 }

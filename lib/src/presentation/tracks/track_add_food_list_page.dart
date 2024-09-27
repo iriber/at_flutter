@@ -2,28 +2,25 @@ import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/presentation/layouts/at_appbar_layout.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/app_title/nav_app_title.dart';
-import 'package:agro_tracking_flutter/src/presentation/nav/nav_helper.dart';
 import 'package:agro_tracking_flutter/src/presentation/styles/at_icons.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_state.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_edit_animal_list.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/food/track_edit_food_list.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_breadcrumb.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_type.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_set_date.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_livestock_select_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fiona_layout/src/presentation/layouts/ifiona_appbar_layout_page.dart';
 import 'package:fiona_i18n/fiona_i18n.dart';
 
-class TrackAddAnimalsPage extends StatelessWidget implements IFionaAppBarLayoutPage {
+class TrackAddFoodListPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
   String? title;
   late TrackAddState state;
-  TrackAddAnimalsPage(BuildContext context, {Key? key}) : super(key: key) {
+  TrackAddFoodListPage(BuildContext context, {Key? key}) : super(key: key) {
    //BlocProvider.of<TrackAddBloc>(context).add((InitTrackAddRequested()));
    //DependencyManager().get<CompanySelectBloc>().add((const FetchAllCompaniesRequested()));
   }
@@ -66,7 +63,7 @@ class TrackAddAnimalsPage extends StatelessWidget implements IFionaAppBarLayoutP
         builder: (context, state) {
 
           this.state=state;
-          Widget  bodyWidget = _buildFormStepEditTrackAnimals(context, state) ;
+          Widget  bodyWidget = _buildFormStepEditTrackFoods(context, state) ;
 
 
           _setTitle(context,state);
@@ -85,13 +82,13 @@ class TrackAddAnimalsPage extends StatelessWidget implements IFionaAppBarLayoutP
 
 
 
-  Widget _buildFormStepEditTrackAnimals(BuildContext context, TrackAddState state) {
+  Widget _buildFormStepEditTrackFoods(BuildContext context, TrackAddState state) {
 
 
     return Column(
         children: [
           Expanded(child: _buildBreadcrumb(context,state ), flex: 1,),
-          Expanded(child: TrackEditAnimalList(state),flex: 9,)
+          Expanded(child: TrackEditFoodList(state),flex: 9,)
         ]);
 
   }
@@ -115,13 +112,13 @@ class TrackAddAnimalsPage extends StatelessWidget implements IFionaAppBarLayoutP
       case TrackType.empty:
         break;
       case TrackType.livestock:
-        items.add(TrackEditBreadcrumbItem("Ganadería"));break;
+        items.add(TrackEditBreadcrumbItem(Fionai18n.message("track.livestock")));break;
       case TrackType.agriculture:
-        items.add(TrackEditBreadcrumbItem("Agricultura"));break;
+        items.add(TrackEditBreadcrumbItem(Fionai18n.message("track.agriculture")));break;
       default: break;
 
     }
-    items.add(TrackEditBreadcrumbItem("Animal"));
+    items.add(TrackEditBreadcrumbItem(Fionai18n.message("track.food")));
 
     return TrackEditBreadcrumb(breadcrumbs: items);
   }

@@ -5,6 +5,7 @@ import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/generic_model.dart';
 import 'package:agro_tracking_flutter/src/domain/media.dart';
 import 'package:agro_tracking_flutter/src/domain/sanity_plan.dart';
+import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackAnimal extends GenericModel{
@@ -65,4 +66,10 @@ class TrackAnimal extends GenericModel{
     return id>0;
   }
 
+  void updateWith( TrackAnimal trackAnimal ){
+    quantity = trackAnimal.quantity;
+    minWeight = trackAnimal.minWeight;
+    maxWeight = trackAnimal.maxWeight;
+    avgWeight = trackAnimal.avgWeight;
+  }
 }

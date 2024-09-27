@@ -14,8 +14,9 @@ import 'package:agro_tracking_flutter/src/presentation/styles/at_theme_data.dart
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_bloc.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_page.dart';
-import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animlas.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_edit_page.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_list_page.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_food_list_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/tracks_page.dart';
 import 'package:flutter/material.dart';
@@ -116,18 +117,32 @@ class _ATAppState extends State<ATApp> {
                       },
                     routes: [
                       GoRoute(
-                        path:  "animals",
+                        path:  "animal",
                         pageBuilder: (context, state) {
-                          return customTransition(context, state, TrackAddAnimalsPage(context));
+                          return customTransition(context, state, TrackAddAnimalListPage(context));
                         },
                           routes: [
                             GoRoute(
                               path:  "edit",
                               pageBuilder: (context, state) {
-                                return customTransition(context, state, TrackAddAnimalCategoryPage(context));
+                                return customTransition(context, state, TrackAddAnimalEditPage(context));
                               },
                             ),
                           ]
+                      ),
+                      GoRoute(
+                          path:  "food",
+                          pageBuilder: (context, state) {
+                            return customTransition(context, state, TrackAddFoodListPage(context));
+                          },/*
+                          routes: [
+                            GoRoute(
+                              path:  "edit",
+                              pageBuilder: (context, state) {
+                                return customTransition(context, state, TrackAddFoodEditPage(context));
+                              },
+                            ),
+                          ]*/
                       ),
                     ]
                 ),

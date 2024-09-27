@@ -24,11 +24,11 @@ import 'package:fiona_layout/src/presentation/layouts/ifiona_appbar_layout_page.
 import 'package:fiona_i18n/fiona_i18n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBarLayoutPage {
+class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
   late TrackAnimalCategoryTab categoryTab;
 
-  TrackAddAnimalCategoryPage(BuildContext context, {Key? key}) : super(key: key) {
+  TrackAddFoodPage(BuildContext context, {Key? key}) : super(key: key) {
    //BlocProvider.of<TrackAddAnimalBloc>(context).add((const InitTrackAnimalAddRequested()));
    //DependencyManager().get<CompanySelectBloc>().add((const FetchAllCompaniesRequested()));
   }
@@ -37,7 +37,7 @@ class TrackAddAnimalCategoryPage extends StatelessWidget implements IFionaAppBar
   Widget build(BuildContext context) {
 
     return PopScope(
-
+        canPop: true,
         child: ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack, )
     );
 

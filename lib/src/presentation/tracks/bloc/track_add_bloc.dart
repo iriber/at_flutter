@@ -1,10 +1,12 @@
 import 'package:agro_tracking_flutter/src/domain/animal_type.dart';
 import 'package:agro_tracking_flutter/src/domain/lockup.dart';
+import 'package:agro_tracking_flutter/src/domain/lot.dart';
 import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/services/facade_service.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
+import 'package:agro_tracking_flutter/src/domain/track_food.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_state.dart';
@@ -71,10 +73,28 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
   Future<void> _onTrackSetTrackTypeRequested(
       TrackSetTrackTypeRequested event, Emitter<TrackAddState> emit) async {
 
+
     //TODO validate;
+
     TrackForm form = event.getForm();
     form.trackType = TrackType.livestock;
     form.trackLivestockType = TrackLivestockType.empty;;
+
+
+    /*
+     * TODO viene paddock, buscamos los lots asociados que se usan para alimento.
+     * y generamos los trackFood para editar
+     */
+
+
+    form.editTrackFood(TrackFood(lotId: 1, lotDesc: "Lote 001", hectares: 50));
+    form.editTrackFood(TrackFood(lotId: 2, lotDesc: "Lote 002", hectares: 0));
+    form.editTrackFood(TrackFood(lotId: 3, lotDesc: "Lote 003", hectares: 0));
+    form.editTrackFood(TrackFood(lotId: 4, lotDesc: "Lote 004", hectares: 0));
+
+
+
+
     emit(
         state.copyWithoutMessage(
             status: () => TrackAddStatus.selectLivestockType,

@@ -68,13 +68,13 @@ class TrackEditAnimalList extends StatelessWidget{
       child: Column(
 
         children: [
-          for (final trackAnimal in state.form?.tracks??List.empty())
+          for (final trackAnimal in state.form?.tracksAnimal??List.empty())
             TrackAnimalItem(
               trackAnimal: trackAnimal,
               onSelect: (context, selected) {
                 TrackAnimalForm form = TrackAnimalForm.fromTrackAnimal(trackAnimal);
                 BlocProvider.of<TrackAddAnimalBloc>(context).add((InitTrackAnimalAddRequested(form: form)));
-                NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsEditLink);
+                NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalEditLink);
 
               },
             ),
@@ -86,7 +86,7 @@ class TrackEditAnimalList extends StatelessWidget{
                  label:Fionai18n.message("track.animal.add"),
                  onTap:(BuildContext context){
                      BlocProvider.of<TrackAddAnimalBloc>(context).add((const InitTrackAnimalAddRequested()));
-                     NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsEditLink);
+                     NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalEditLink);
                  }
              ),
            ),
