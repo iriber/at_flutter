@@ -30,10 +30,7 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
   @override
   Widget build(BuildContext context) {
 
-    return PopScope(
-
-        child: ATAppBarLayout.likePopup(this, onClose: _onWillPop)
-    );
+    return ATAppBarLayout.likePopup(this, onClose: _onWillPop);
 
   }
 
@@ -42,7 +39,7 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
     //TODO preguntar si quiere irse y/ guardar los cambios
 
-    return false;
+    return true;
   }
 
   @override

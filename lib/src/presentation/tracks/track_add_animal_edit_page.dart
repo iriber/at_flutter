@@ -36,24 +36,11 @@ class TrackAddAnimalEditPage extends StatelessWidget implements IFionaAppBarLayo
   @override
   Widget build(BuildContext context) {
 
-    return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (bool didPop, Object? result) async {
-          if (didPop) {
-            return;
-          }
-          final bool shouldPop =  false;
-          if (context.mounted && shouldPop) {
-            Navigator.pop(context);
-          }
-        },
-        child: ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack, )
-    );
+    return ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack, );
 
   }
 
   Future<bool> _onWillPop(BuildContext context) async {
-    ATErrorMessage.cleanMessages();
 
     //TODO preguntar si quiere irse y/ guardar los cambios
 

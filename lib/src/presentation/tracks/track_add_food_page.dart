@@ -36,15 +36,11 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
   @override
   Widget build(BuildContext context) {
 
-    return PopScope(
-        canPop: true,
-        child: ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack, )
-    );
+    return ATAppBarLayout.likePopup(this, onClose: _onWillPop,iconBack:  ATIcons().iconBack);
 
   }
 
   Future<bool> _onWillPop(BuildContext context) async {
-    ATErrorMessage.cleanMessages();
 
     //TODO preguntar si quiere irse y/ guardar los cambios
 

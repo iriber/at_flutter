@@ -20,7 +20,7 @@ class ATAppBarLayout extends FionaAppBarLayout{
 
   }//, {this.actions, super.floatingActionBtn, super.menuButton=false});
 
-  ATAppBarLayout.likePopup(page, {Widget? iconBack, this.customHeader, this.hideHeader=true, Function(BuildContext context)? onClose}):super.likePopup(page, onClose: onClose, settingsButton: false, customIconBack: iconBack ){
+  ATAppBarLayout.likePopup(page, {Widget? iconBack, this.customHeader, this.hideHeader=true, Future<bool>  Function(BuildContext context)? onClose}):super.likePopup(page, onClose: onClose, settingsButton: false, customIconBack: iconBack ){
     if(iconBack==null){
       this.customIconBack = ATIcons().iconClose;
     }

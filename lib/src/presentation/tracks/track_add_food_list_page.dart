@@ -35,11 +35,11 @@ class TrackAddFoodListPage extends StatelessWidget implements IFionaAppBarLayout
 
   }
 
-  void _onBack(BuildContext context) {
+  Future<bool>  _onBack(BuildContext context) async{
 
     TrackForm form = state.form??TrackForm.empty();
     BlocProvider.of<TrackAddBloc>(context).add((TrackSetTrackTypeRequested(form)));
-
+    return true;
   }
 
   @override

@@ -43,7 +43,7 @@ class ATAppBar extends AppBar{
     String titleString = "",
     List<Widget> customActions = const <Widget>[],
     bool menuButton = true,
-    Function(BuildContext context)? onClose
+    Future<bool>  Function(BuildContext context)? onClose
   }) {
 
     Widget iconMenu=customIconMenu??ATIcons().iconMenu;
@@ -87,7 +87,7 @@ class ATAppBar extends AppBar{
   }
 
 
-  static Widget buildIconBackButton(BuildContext context, Widget iconBack, Function(BuildContext context)? onClose){
+  static Widget buildIconBackButton(BuildContext context, Widget iconBack, Future<bool> Function(BuildContext context)? onClose){
     return IconButton(
       icon: iconBack,
       tooltip: 'Back',
@@ -98,23 +98,25 @@ class ATAppBar extends AppBar{
     );
   }
 
-  static Future<void> pressIconBack (BuildContext context, Function(BuildContext context)? onClose) async {
+  static Future<void> pressIconBack (BuildContext context, Future<bool> Function(BuildContext context)? onClose) async {
+    bool canClose=true;
     if(onClose!=null){
-      onClose!(context);
+      canClose = await onClose!(context);
     }
-    if (Navigator.canPop(context)) {
-      Navigator.pop(context);
-    } else {
-      NavHelper().navToHome(context);
-     /*
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => MenuPage())
-      );*/
+
+    if(canClose){
+      if (Navigator.canPop(context)) {
+        Navigator.pop(context);
+      } else {
+        NavHelper().navToHome(context);
+      }
     }
+
+
   }
 
   static Widget? buildLeftBtn(
-      BuildContext context, bool backButton, String iconBackLabel, Widget iconBack, Function(BuildContext context)? onClose) {
+      BuildContext context, bool backButton, String iconBackLabel, Widget iconBack,Future<bool>  Function(BuildContext context)? onClose) {
 
     if (backButton) {
       if(iconBackLabel.isNotEmpty){
