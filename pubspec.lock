@@ -322,9 +322,11 @@ packages:
   fiona_layout:
     dependency: "direct main"
     description:
-      path: "../fiona_layout"
-      relative: true
-    source: path
+      path: "."
+      ref: main
+      resolved-ref: "1a5f141a6ca98f3be139d2c85164c30087c4bbd3"
+      url: "https://github.com/iriber/fiona_layout.git"
+    source: git
     version: "0.0.1"
   fiona_logger:
     dependency: "direct main"

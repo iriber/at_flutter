@@ -69,7 +69,9 @@ dependencies:
       ref: main
 
   fiona_layout:
-    path: "../fiona_layout"
+    git:
+      url: https://github.com/iriber/fiona_layout.git
+      ref: main
 
   fiona_i18n:
     git:
