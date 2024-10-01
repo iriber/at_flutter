@@ -11,6 +11,7 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_type.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_set_date.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_livestock_select_type.dart';
+import 'package:agro_tracking_flutter/src/utils/at_dialog_utils.dart';
 import 'package:agro_tracking_flutter/src/utils/at_messages_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,11 +36,7 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
   }
 
   Future<bool> _onWillPop(BuildContext context) async {
-
-
-    //TODO preguntar si quiere irse y/ guardar los cambios
-
-    return true;
+    return await AtDialogUtils().showConfirmDialog(context)??false;
   }
 
   @override

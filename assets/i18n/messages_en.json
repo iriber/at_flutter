@@ -8,6 +8,11 @@
 
   "fields.required": "Complete los campos requeridos",
 
+  "dialog.alertClose.title": "¿Confirma salir?",
+  "dialog.alertClose.msg": "¿Está seguro que desea salir y perder los cambios?",
+  "dialog.alertClose.yes": "Si",
+  "dialog.alertClose.no": "No",
+
   "companySelect.title": "Elige un Campo",
 
   "tracks.title": "Recorridas",
