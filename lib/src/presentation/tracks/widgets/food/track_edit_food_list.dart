@@ -18,8 +18,11 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_ani
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_events.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_bloc.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_state.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_animal_form.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_food_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_animal_item.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/food/track_food_item.dart';
@@ -73,10 +76,9 @@ class TrackEditFoodList extends StatelessWidget{
             TrackFoodItem(
               trackFood: trackFood,
               onSelect: (context, selected) {
-                //TrackAnimalForm form = TrackAnimalForm.fromTrackAnimal(trackFood);
-                //BlocProvider.of<TrackAddAnimalBloc>(context).add((InitTrackAnimalAddRequested(form: form)));
-                //NavHelper().navToPageLink(context, PagesConfig.trackingAddAnimalsEditLink);
-
+                TrackFoodForm form = TrackFoodForm.fromTrackFood(trackFood);
+                BlocProvider.of<TrackAddFoodBloc>(context).add((InitTrackFoodAddRequested(form: form)));
+                NavHelper().navToPageLink(context, PagesConfig.trackingAddFoodEditLink);
               },
             ),
 

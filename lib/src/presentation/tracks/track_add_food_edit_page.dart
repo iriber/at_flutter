@@ -11,8 +11,13 @@ import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_ani
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_state.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_events.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_bloc.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_events.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_state.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_animal_form.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_food_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_animal_category_tab.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/food/track_food_lot_tab.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_breadcrumb.dart';
 import 'package:agro_tracking_flutter/src/presentation/widgets/at_button.dart';
 import 'package:agro_tracking_flutter/src/presentation/widgets/at_error_msg.dart';
@@ -24,12 +29,12 @@ import 'package:fiona_layout/src/presentation/layouts/ifiona_appbar_layout_page.
 import 'package:fiona_i18n/fiona_i18n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage {
+class TrackAddFoodEditPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
-  late TrackAnimalCategoryTab categoryTab;
+  late TrackFoodLotTab foodLotTab;
 
-  TrackAddFoodPage(BuildContext context, {Key? key}) : super(key: key) {
-   //BlocProvider.of<TrackAddAnimalBloc>(context).add((const InitTrackAnimalAddRequested()));
+  TrackAddFoodEditPage(BuildContext context, {Key? key}) : super(key: key) {
+   //BlocProvider.of<TrackAddFoodBloc>(context).add((const InitTrackAnimalAddRequested()));
    //DependencyManager().get<CompanySelectBloc>().add((const FetchAllCompaniesRequested()));
   }
 
@@ -50,15 +55,15 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
   @override
   Widget buildBody(BuildContext context) {
 
-    return BlocConsumer<TrackAddAnimalBloc, TrackAddAnimalState>(
+    return BlocConsumer<TrackAddFoodBloc, TrackAddFoodState>(
         listener: (context, state) {
           switch(state.status){
-            case TrackAddAnimalStatus.success:{
+            case TrackAddFoodStatus.success:{
               //cierro y me voy al padre, tengo q avisar que agregué algo
-              BlocProvider.of<TrackAddBloc>(context).add(TrackLivestockEditTrackAnimalRequested(state.getTrackAnimal()));
+              BlocProvider.of<TrackAddBloc>(context).add(TrackLivestockEditTrackFoodRequested(state.getTrackFood()));
               NavHelper().back(context);
             }break;
-          case TrackAddAnimalStatus.failure:{
+          case TrackAddFoodStatus.failure:{
             ATMessagesUtils.errorMessage(state.message);
             }break;
           //TODO next step.
@@ -69,13 +74,13 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
 
           Widget bodyWidget ;
           switch(state.status){
-            case TrackAddAnimalStatus.initial:{
+            case TrackAddFoodStatus.initial:{
               bodyWidget = _buildPage(context, state);
             }break;
-            case TrackAddAnimalStatus.sending:{
+            case TrackAddFoodStatus.sending:{
               bodyWidget = _buildPage(context, state);
             }break;
-            case TrackAddAnimalStatus.failure:{
+            case TrackAddFoodStatus.failure:{
               bodyWidget = _buildPage(context, state);
             }break;
             default:{
@@ -91,7 +96,7 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
     );
   }
 
-  Widget _buildPage(BuildContext context, TrackAddAnimalState state) {
+  Widget _buildPage(BuildContext context, TrackAddFoodState state) {
     return Column(
         children: [
           Expanded(child: _buildBreadcrumb(context, state ), flex: 1,),
@@ -100,12 +105,12 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
         ]);
   }
 
-  Widget buildTabs(BuildContext context, TrackAddAnimalState state) {
+  Widget buildTabs(BuildContext context, TrackAddFoodState state) {
 
-    categoryTab = TrackAnimalCategoryTab(state);
+    foodLotTab = TrackFoodLotTab(state);
 
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: SizedBox.shrink(),
@@ -133,10 +138,10 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.black54,
                   tabs: [
-                    TabItem(title: Fionai18n.message("track.animal.category")),
-                    TabItem(title: Fionai18n.message("track.animal.corporalCapacity")),
-                    TabItem(title: Fionai18n.message("track.animal.sanityPlan")),
-                    TabItem(title: Fionai18n.message("track.animal.media")),
+                    TabItem(title: Fionai18n.message("track.food.lot")),
+                    //TabItem(title: Fionai18n.message("track.animal.corporalCapacity")),
+                    //TabItem(title: Fionai18n.message("track.animal.sanityPlan")),
+                    TabItem(title: Fionai18n.message("track.food.media")),
                   ],
                 ),
               ),
@@ -145,10 +150,8 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
         ),
         body: TabBarView(
           children: [
-            Center(child: categoryTab),
-            Center(child: Text(Fionai18n.message("track.animal.corporalCapacity"))),
-            Center(child: Text(Fionai18n.message("track.animal.sanityPlan"))),
-            Center(child: Text(Fionai18n.message("track.animal.media"))),
+            Center(child: foodLotTab),
+            Center(child: Text(Fionai18n.message("track.food.media"))),
           ],
         ),
       ),
@@ -159,9 +162,9 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
     return Fionai18n.message("tracks.add.animal.category.title");
   }
 
-  Widget _buildFooter(BuildContext context, TrackAddAnimalState state) {
+  Widget _buildFooter(BuildContext context, TrackAddFoodState state) {
 
-    bool isSending = (state.status==TrackAddAnimalStatus.sending);
+    bool isSending = (state.status==TrackAddFoodStatus.sending);
 
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 80),
@@ -177,28 +180,29 @@ class TrackAddFoodPage extends StatelessWidget implements IFionaAppBarLayoutPage
 
   }
 
-  TrackEditBreadcrumb _buildBreadcrumb(BuildContext context, TrackAddAnimalState state) {
+  TrackEditBreadcrumb _buildBreadcrumb(BuildContext context, TrackAddFoodState state) {
 
     List<TrackEditBreadcrumbItem> items = List.empty(growable: true);
 
     items.add(TrackEditBreadcrumbItem("Potrero 1B"));
-    items.add(TrackEditBreadcrumbItem("Ganadería"));
-    items.add(TrackEditBreadcrumbItem("Animal"));
-    items.add(TrackEditBreadcrumbItem("Categoria"));
+    items.add(TrackEditBreadcrumbItem(Fionai18n.message("track.livestock")));
+    items.add(TrackEditBreadcrumbItem(Fionai18n.message("track.food")));
+
+    TrackFoodForm form = state.form??TrackFoodForm.empty();
+    items.add(TrackEditBreadcrumbItem(form.getLotValue()?.name??""));
+
+
     return TrackEditBreadcrumb(breadcrumbs: items);
 
   }
 
-  void doSave(BuildContext context, TrackAddAnimalState state){
+  void doSave(BuildContext context, TrackAddFoodState state){
 
-    TrackAnimalForm form = state.form??TrackAnimalForm.empty();
+    TrackFoodForm form = state.form??TrackFoodForm.empty();
 
-    categoryTab.fillForm(form);
+    foodLotTab.fillForm(form);
 
-    AnimalType? animalType = form.getAnimalTypeValue();
-    debugPrint("Animal type: ${animalType?.type?.label}" );
-
-    BlocProvider.of<TrackAddAnimalBloc>(context).add(( TrackAddAnimalRequested(form)));
+    BlocProvider.of<TrackAddFoodBloc>(context).add(( TrackAddFoodRequested(form)));
 
 
   }

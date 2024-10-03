@@ -36,5 +36,11 @@
   "quantity.required": "Indique la cantidad",
   "track.animal.minWeight": "Peso mínimo",
   "track.animal.maxWeight": "Peso máximo",
-  "track.animal.avgWeight": "Peso promedio"
+  "track.animal.avgWeight": "Peso promedio",
+
+
+  "track.food.media": "Fotos/Videos",
+  "track.food.lot": "Lote",
+  "track.food.hectares": "Hectáreas",
+  "track.food.consumptionPerAnimal": "Consumo p/Animal"
 }

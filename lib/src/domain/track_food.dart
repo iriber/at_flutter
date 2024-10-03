@@ -13,7 +13,7 @@ class TrackFood extends GenericModel{
   int? lotId;
   String? lotDesc;
   double? hectares;
-  double? consumptionPerAnimal;
+  int? consumptionPerAnimal;
   String? leftover;
   String? resource;
   String? availability;

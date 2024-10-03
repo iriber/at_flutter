@@ -34,6 +34,7 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
     on<TrackSetTrackTypeRequested>(_onTrackSetTrackTypeRequested);
 
     on<TrackLivestockEditTrackAnimalRequested>(_onTrackLivestockEditTrackAnimalRequested);
+    on<TrackLivestockEditTrackFoodRequested>(_onTrackLivestockEditTrackFoodRequested);
 
     on<TrackAddRequested>(_onTrackAddRequested);
 
@@ -137,12 +138,30 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
    });
 
   }
+
+
   Future<void> _onTrackLivestockEditTrackAnimalRequested(
       TrackLivestockEditTrackAnimalRequested event, Emitter<TrackAddState> emit) async {
 
     //TODO validate;
     TrackForm form = state.form??TrackForm.empty();
     form.editTrackAnimal(event.getTrackAnimal());
+
+    emit(
+        state.copyWithoutMessage(
+          //status: () => TrackAddStatus.editAnimalTracks,
+            form: () => form
+        )
+    );
+
+  }
+
+  Future<void> _onTrackLivestockEditTrackFoodRequested(
+      TrackLivestockEditTrackFoodRequested event, Emitter<TrackAddState> emit) async {
+
+    //TODO validate;
+    TrackForm form = state.form??TrackForm.empty();
+    form.editTrackFood(event.getTrackFood());
 
     emit(
         state.copyWithoutMessage(

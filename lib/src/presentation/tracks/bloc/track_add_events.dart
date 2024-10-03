@@ -1,4 +1,5 @@
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
+import 'package:agro_tracking_flutter/src/domain/track_food.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
 
 abstract class TrackAddEvent {
@@ -49,6 +50,14 @@ class TrackLivestockEditTrackAnimalRequested extends TrackAddEvent {
 
 }
 
+class TrackLivestockEditTrackFoodRequested extends TrackAddEvent {
+  final TrackFood  _trackFood;
+
+  const TrackLivestockEditTrackFoodRequested(this._trackFood);
+
+  TrackFood getTrackFood() => _trackFood;
+
+}
 
 class TrackAddRequested extends TrackAddEvent {
   final TrackForm _form;

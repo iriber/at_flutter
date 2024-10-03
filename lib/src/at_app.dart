@@ -13,9 +13,11 @@ import 'package:agro_tracking_flutter/src/presentation/splashscreen.dart';
 import 'package:agro_tracking_flutter/src/presentation/styles/at_theme_data.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_animal_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_food_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/tracks_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_edit_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_animal_list_page.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_food_edit_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_food_list_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/track_add_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/tracks_page.dart';
@@ -76,6 +78,9 @@ class _ATAppState extends State<ATApp> {
         BlocProvider<TrackAddAnimalBloc>(
           create: (context) => TrackAddAnimalBloc(),
         ),
+        BlocProvider<TrackAddFoodBloc>(
+          create: (context) => TrackAddFoodBloc(),
+        ),
       ],
       child: _buildMaterialApp(context),
     );
@@ -134,7 +139,7 @@ class _ATAppState extends State<ATApp> {
                           path:  "food",
                           pageBuilder: (context, state) {
                             return customTransition(context, state, TrackAddFoodListPage(context));
-                          },/*
+                          },
                           routes: [
                             GoRoute(
                               path:  "edit",
@@ -142,7 +147,7 @@ class _ATAppState extends State<ATApp> {
                                 return customTransition(context, state, TrackAddFoodEditPage(context));
                               },
                             ),
-                          ]*/
+                          ]
                       ),
                     ]
                 ),
