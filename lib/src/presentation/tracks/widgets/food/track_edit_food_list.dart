@@ -72,7 +72,7 @@ class TrackEditFoodList extends StatelessWidget{
       child: Column(
 
         children: [
-          for (final trackFood in state.form?.tracksFood??List.empty())
+          for (final trackFood in state.form?.getTracksFoodCurrentPaddock()??List.empty())
             TrackFoodItem(
               trackFood: trackFood,
               onSelect: (context, selected) {

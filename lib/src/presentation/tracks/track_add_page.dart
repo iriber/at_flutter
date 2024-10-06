@@ -5,9 +5,12 @@ import 'package:agro_tracking_flutter/src/presentation/layouts/at_appbar_layout.
 import 'package:agro_tracking_flutter/src/presentation/nav/app_title/nav_app_title.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/nav_helper.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_bloc.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_events.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_add_state.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/animal/track_edit_animal_list.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_breadcrumb.dart';
+import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_paddock.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_select_type.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_set_date.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_edit_livestock_select_type.dart';
@@ -23,8 +26,14 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
   String? title;
 
-  TrackAddPage(BuildContext context, {Key? key}) : super(key: key) {
-   //BlocProvider.of<TrackAddBloc>(context).add((const InitTrackAddRequested()));
+  TrackAddPage(BuildContext context, {Key? key, Track? track}) : super(key: key) {
+    TrackForm? form;
+    if(track!=null){
+      form = TrackForm.empty();
+      form.fill(track);
+      BlocProvider.of<TrackAddBloc>(context).add(( InitTrackAddRequested(form: form)));
+    }
+    //
    //DependencyManager().get<CompanySelectBloc>().add((const FetchAllCompaniesRequested()));
   }
 
@@ -65,11 +74,14 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
             case TrackAddStatus.sending:{
               bodyWidget = _buildFormStep1(context, state);
             }break;
-            case TrackAddStatus.selectTrackType:{
+            case TrackAddStatus.selectPadock:{
               bodyWidget = _buildFormStep2(context, state);
             }break;
-            case TrackAddStatus.selectLivestockType:{
+            case TrackAddStatus.selectTrackType:{
               bodyWidget = _buildFormStep3(context, state);
+            }break;
+            case TrackAddStatus.selectLivestockType:{
+              bodyWidget = _buildFormStep4(context, state);
             }break;
             case TrackAddStatus.failure:{
               bodyWidget = _buildFailure(context, state);
@@ -107,10 +119,15 @@ class TrackAddPage extends StatelessWidget implements IFionaAppBarLayoutPage {
 
   Widget _buildFormStep2(BuildContext context, TrackAddState state) {
 
-    return TrackEditSelectType(state);
+    return TrackEditSelectPaddock(state);
   }
 
   Widget _buildFormStep3(BuildContext context, TrackAddState state) {
+
+    return TrackEditSelectType(state);
+  }
+
+  Widget _buildFormStep4(BuildContext context, TrackAddState state) {
 
     return Column(
       children: [

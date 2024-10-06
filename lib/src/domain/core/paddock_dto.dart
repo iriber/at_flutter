@@ -1,14 +1,18 @@
 
+import 'package:agro_tracking_flutter/src/domain/core/lot_dto.dart';
+
 class PaddockDTO{
 
   int id=0;
   String name="";
   int farmId=0;
+  List<LotDto>? lots;
 
   PaddockDTO(
       { this.id=0,
         this.farmId=0,
-        this.name="",});
+        this.name="",
+      this.lots});
 
   PaddockDTO.empty();
 

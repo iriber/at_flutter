@@ -1,3 +1,4 @@
+import 'package:agro_tracking_flutter/src/domain/paddock.dart';
 import 'package:agro_tracking_flutter/src/domain/track_animal.dart';
 import 'package:agro_tracking_flutter/src/domain/track_food.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/bloc/track_form.dart';
@@ -17,6 +18,15 @@ class TrackSetDateRequested extends TrackAddEvent {
   final TrackForm _form;
 
   const TrackSetDateRequested(this._form);
+
+  TrackForm getForm() => _form;
+
+}
+
+class TrackSetPaddockRequested extends TrackAddEvent {
+  final TrackForm _form;
+
+  const TrackSetPaddockRequested(this._form);
 
   TrackForm getForm() => _form;
 

@@ -62,6 +62,13 @@ class MenuInMemory implements MenuRepository{
             label: "Recría",
             link: PagesConfig.recriaLink));
 
+    menus.add(
+        Menu(5,
+            code:"media",
+            icon: "calendar",
+            label: "Foto",
+            link: "/media"));
+
     return menus;
 
   }

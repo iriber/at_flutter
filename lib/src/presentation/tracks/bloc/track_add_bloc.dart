@@ -31,6 +31,7 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
         super(TrackAddState()) {
     on<InitTrackAddRequested>(_onInitTrackAddRequested);
     on<TrackSetDateRequested>(_onTrackSetDateRequested);
+    on<TrackSetPaddockRequested>(_onTrackSetPaddockRequested);
     on<TrackSetTrackTypeRequested>(_onTrackSetTrackTypeRequested);
 
     on<TrackLivestockEditTrackAnimalRequested>(_onTrackLivestockEditTrackAnimalRequested);
@@ -64,35 +65,76 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
     form.trackType = TrackType.empty;
     form.trackLivestockType = TrackLivestockType.empty;
 
-    emit(state.copyWithoutMessage(
-        status: () => TrackAddStatus.selectTrackType,
-        form: () => form
-    )
-    );
+    Track track = form.buildTrack();
+    Farm farm = await SharedPrefUtils().getSelectedFarm();
+    User user = await SharedPrefUtils().getUser();
+    track.farmId = farm.id;
+    track.userId = user.id;
+
+    await _service.saveTrack(track).then((result) async {
+
+        emit(state.copyWithoutMessage(
+          status: () => TrackAddStatus.selectPadock,
+          form: () => form
+      )
+      );
+
+
+    }).catchError((exception, stackTrace) {
+
+      emit(state.copyWith(
+          status: () => TrackAddStatus.failure,
+          message: () => exception.toString()
+      ));
+
+    });
+
+
   }
 
-  Future<void> _onTrackSetTrackTypeRequested(
-      TrackSetTrackTypeRequested event, Emitter<TrackAddState> emit) async {
+  Future<void> _onTrackSetPaddockRequested(
+      TrackSetPaddockRequested event, Emitter<TrackAddState> emit) async {
 
 
     //TODO validate;
 
     TrackForm form = event.getForm();
-    form.trackType = TrackType.livestock;
-    form.trackLivestockType = TrackLivestockType.empty;;
+
+    /*
+    await _service.addTrack(track).then((result) async {
+
+      emit(state.copyWithoutMessage(
+          status: () => TrackAddStatus.success
+      ));
+
+
+    }).catchError((exception, stackTrace) {
+
+      emit(state.copyWith(
+          status: () => TrackAddStatus.failure,
+          message: () => exception.toString()
+      ));
+
+    });
+*/
+
+    //por cada lote del paddock armo un track food.
+    //TODO ver que pasa si no tiene lotes, si es un corral.
+    Paddock paddock = form.getPaddock().getValue()??Paddock.empty();
+    List<Lot> lots = paddock.lots??List.empty();
+
+    lots.forEach( (item) {
+      form.addTrackFood(TrackFood(lotId: item.id, lotDesc: item.name, paddockId: paddock.id));
+    });
+
 
 
     /*
-     * TODO viene paddock, buscamos los lots asociados que se usan para alimento.
-     * y generamos los trackFood para editar
-     */
-
-
     form.editTrackFood(TrackFood(lotId: 1, lotDesc: "Lote 001", hectares: 50));
     form.editTrackFood(TrackFood(lotId: 2, lotDesc: "Lote 002", hectares: 0));
     form.editTrackFood(TrackFood(lotId: 3, lotDesc: "Lote 003", hectares: 0));
     form.editTrackFood(TrackFood(lotId: 4, lotDesc: "Lote 004", hectares: 0));
-
+   */
 
 
 
@@ -105,7 +147,23 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
 
   }
 
+  Future<void> _onTrackSetTrackTypeRequested(
+      TrackSetTrackTypeRequested event, Emitter<TrackAddState> emit) async {
 
+
+    TrackForm form = event.getForm();
+    form.trackType = TrackType.livestock;
+    form.trackLivestockType = TrackLivestockType.empty;;
+
+
+    emit(
+        state.copyWithoutMessage(
+            status: () => TrackAddStatus.selectLivestockType,
+            form: () => form
+        )
+    );
+
+  }
 
   Future<void> _onTrackAddRequested(
       TrackAddRequested event, Emitter<TrackAddState> emit) async {
@@ -144,16 +202,45 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
       TrackLivestockEditTrackAnimalRequested event, Emitter<TrackAddState> emit) async {
 
     //TODO validate;
-    TrackForm form = state.form??TrackForm.empty();
-    form.editTrackAnimal(event.getTrackAnimal());
 
+    TrackForm form = state.form??TrackForm.empty();
+
+    Paddock paddock = form.getPaddock().getValue()??Paddock.empty();
+    TrackAnimal trackAnimal = event.getTrackAnimal();
+    trackAnimal.paddockId = paddock.id;
+    form.editTrackAnimal(trackAnimal);
+
+    Track track = form.buildTrack();
+    Farm farm = await SharedPrefUtils().getSelectedFarm();
+    User user = await SharedPrefUtils().getUser();
+    track.farmId = farm.id;
+    track.userId = user.id;
+
+    await _service.saveTrack(track).then((result) async {
+
+      emit(state.copyWithoutMessage(
+          //status: () => TrackAddStatus.editAnimalTracks,
+          form: () => form
+      )
+      );
+
+
+    }).catchError((exception, stackTrace) {
+
+      emit(state.copyWith(
+          status: () => TrackAddStatus.failure,
+          message: () => exception.toString()
+      ));
+
+    });
+    /*
     emit(
         state.copyWithoutMessage(
           //status: () => TrackAddStatus.editAnimalTracks,
             form: () => form
         )
     );
-
+*/
   }
 
   Future<void> _onTrackLivestockEditTrackFoodRequested(

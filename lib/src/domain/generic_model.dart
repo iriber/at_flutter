@@ -1,5 +1,6 @@
 abstract class GenericModel extends Object{
   int id;
-
-  GenericModel(this.id);
+  int? localId;
+  bool isSyncrhonized=false;
+  GenericModel(this.id, {this.localId, this.isSyncrhonized=false});
 }

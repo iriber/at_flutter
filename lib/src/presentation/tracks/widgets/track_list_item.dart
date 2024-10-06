@@ -28,9 +28,9 @@ class TrackListItem extends StatelessWidget {
           contentPadding:
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           leading: const Icon(Icons.account_circle),
-          title: Text( track.paddockDesc??""),
+          //title: Text( track.paddockDesc??""),
           //title: _buildPercentage(context),
-          subtitle: Text( ATDateUtils().format(track.datetime, pattern: "E dd/MM")),
+          title: Text( ATDateUtils().format(track.datetime, pattern: "E dd/MM")),
           //trailing: const Icon(Icons.arrow_forward),
           trailing: _buildPercentage(context),
         ),
@@ -39,7 +39,7 @@ class TrackListItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: (){
-        //this.onSelect(context, this.company);
+        this.onSelect(context, this.track);
       },
       child: card,
     );

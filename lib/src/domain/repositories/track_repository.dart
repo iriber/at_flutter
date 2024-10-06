@@ -7,6 +7,8 @@ abstract class TrackRepository {
 
   Future<List<Track>> getAll(Farm farm);
 
+  Future<Track> save(Track entity);
+
   Future<Track> add(Track entity);
 
   Future<bool> update(Track entity);

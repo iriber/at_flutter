@@ -122,9 +122,12 @@ abstract class ATConfig {
       manager.registerLazySingletonIfNotExist<FarmRepository>(instanceName: DataProxy.remote,() => FarmRemote());
       manager.registerLazySingletonIfNotExist<FarmRepository>(() => FarmProxy());
 
+      /*
       manager.registerLazySingletonIfNotExist<PaddockRepository>(instanceName: DataProxy.local,() => PaddockLocal());
       manager.registerLazySingletonIfNotExist<PaddockRepository>(instanceName: DataProxy.remote,() => PaddockRemote());
       manager.registerLazySingletonIfNotExist<PaddockRepository>(() => PaddockProxy());
+*/
+      manager.registerLazySingletonIfNotExist<PaddockRepository>(() => PaddockRemote());
 
       manager.registerLazySingletonIfNotExist<TrackRepository>(() => TrackInMemory());
 

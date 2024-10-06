@@ -46,6 +46,10 @@ class FacadeService {
     return trackService.addTrack(track);
   }
 
+  Future<Track> saveTrack(Track track) async{
+    return trackService.saveTrack(track);
+  }
+
   Future<List<Paddock>> findPaddocks({String? name, required Farm farm}) async{
     return farmService.findPaddocks( name: name, farm:farm);
   }

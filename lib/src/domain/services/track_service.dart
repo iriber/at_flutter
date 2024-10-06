@@ -16,5 +16,7 @@ class TrackService {
   Future<Track> addTrack(Track track) async{
     return repository.add(track);
   }
-
+  Future<Track> saveTrack(Track track) async{
+    return repository.save(track);
+  }
 }

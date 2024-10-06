@@ -4,6 +4,7 @@ import 'package:agro_tracking_flutter/src/dependency_manager.dart';
 import 'package:agro_tracking_flutter/src/domain/core/at_core_repository.dart';
 import 'package:agro_tracking_flutter/src/domain/core/farm_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/core/login_dto.dart';
+import 'package:agro_tracking_flutter/src/domain/core/lot_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/core/paddock_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/core/registration_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/core/user_dto.dart';
@@ -83,31 +84,36 @@ class ATApi  implements ATCoreRepository{
   Future<List<PaddockDTO>> getPaddocks(FarmDTO farm)async{
     List<PaddockDTO> paddocks = List<PaddockDTO>.empty(growable: true);
 
+    List<LotDto>? lots;
+
     if( farm.id> 1){
-      PaddockDTO paddockDTO = PaddockDTO.empty();
-      paddockDTO.id=1;
-      paddockDTO.name="Potrero 1A";
-      paddockDTO.farmId = farm.id;
+
+      lots = List<LotDto>.empty(growable: true);
+      lots.add(LotDto(id: 1, name: "Lote 1A01"));
+      lots.add(LotDto(id: 2, name: "Lote 1A02"));
+      lots.add(LotDto(id: 3, name: "Lote 1A03"));
+      PaddockDTO paddockDTO = PaddockDTO(id: 1, name: "Potrero 1A", farmId: farm.id, lots: lots);
       paddocks.add(paddockDTO);
 
-      paddockDTO = PaddockDTO.empty();
-      paddockDTO.id=2;
-      paddockDTO.name="Potrero 2A";
-      paddockDTO.farmId = farm.id;
-      paddocks.add(paddockDTO);
+      lots = List<LotDto>.empty(growable: true);
+      lots.add(LotDto(id: 4, name: "Lote 2A01"));
+      lots.add(LotDto(id: 5, name: "Lote 2A02"));
+      lots.add(LotDto(id: 6, name: "Lote 2A03"));
+      paddocks.add( PaddockDTO(id: 2, name: "Potrero 2A", farmId: farm.id, lots: lots));
 
     }else{
-      PaddockDTO paddockDTO = PaddockDTO.empty();
-      paddockDTO.id=3;
-      paddockDTO.name="Potrero 1B";
-      paddockDTO.farmId = farm.id;
-      paddocks.add(paddockDTO);
 
-      paddockDTO = PaddockDTO.empty();
-      paddockDTO.id=4;
-      paddockDTO.name="Potrero 2B";
-      paddockDTO.farmId = farm.id;
-      paddocks.add(paddockDTO);
+      lots = List<LotDto>.empty(growable: true);
+      lots.add(LotDto(id: 7, name: "Lote 1B01"));
+      lots.add(LotDto(id: 8, name: "Lote 1B02"));
+      lots.add(LotDto(id: 9, name: "Lote 1B03"));
+      paddocks.add( PaddockDTO(id: 3, name: "Potrero 1B", farmId: farm.id, lots: lots));
+
+      lots = List<LotDto>.empty(growable: true);
+      lots.add(LotDto(id: 10, name: "Lote 2B01"));
+      lots.add(LotDto(id: 11, name: "Lote 2B02"));
+      lots.add(LotDto(id: 12, name: "Lote 2B03"));
+      paddocks.add( PaddockDTO(id: 4, name: "Potrero 2B", farmId: farm.id, lots: lots));
 
     }
 

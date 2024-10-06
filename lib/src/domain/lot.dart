@@ -1,5 +1,6 @@
 
 import 'package:agro_tracking_flutter/src/domain/core/farm_dto.dart';
+import 'package:agro_tracking_flutter/src/domain/core/lot_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/core/paddock_dto.dart';
 import 'package:agro_tracking_flutter/src/domain/farm.dart';
 import 'package:agro_tracking_flutter/src/domain/generic_model.dart';
@@ -21,6 +22,10 @@ class Lot extends GenericModel{
   Lot.fromJson(dynamic item):super(item["id"]) {
     name=item["name"]??"";
     paddockId = item["paddockId"];
+  }
+
+  Lot.fromDto(LotDto dto):super(dto.id) {
+    name =  dto.name;
   }
 
   Map<String, Object> toMap(){

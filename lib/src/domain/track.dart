@@ -14,8 +14,6 @@ enum TrackLivestockType { animal, food, water, empty }
 
 class Track extends GenericModel{
 
-  int? paddockId;
-  String? paddockDesc;
   int? userId;
   int? farmId;
   DateTime datetime = DateTime.timestamp();
@@ -26,8 +24,8 @@ class Track extends GenericModel{
 
 
   Track(
-      { int id=-1,this.paddockId,
-      this.userId,this.farmId}):super(id);
+      { int id=-1, int? localId, bool sync=false,
+      this.userId,this.farmId}):super(id,localId: localId, isSyncrhonized: sync);
 
   Track.empty():super(-1);
 
@@ -36,8 +34,6 @@ class Track extends GenericModel{
   }
 
   Track.fromJson(dynamic item):super(item["id"]) {
-    paddockId = item["paddockId"];
-    paddockDesc = item["paddockDesc"];
     userId = item["userId"];
     farmId = item["farmd"];
   }
@@ -46,16 +42,14 @@ class Track extends GenericModel{
     return {
       'id':id,
       'datetime':datetime??"",
-      'paddockId': paddockId??'',
       'farmId': farmId??'',
       'userId': userId??'',
     };
   }
 
   bool isNotEmpty() {
-    return id>0;
+    return (localId??0)>0;
   }
-
 
 
 }

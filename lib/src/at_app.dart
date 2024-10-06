@@ -2,10 +2,12 @@ import 'package:agro_tracking_flutter/src/config/enviroment.dart';
 import 'package:agro_tracking_flutter/src/config/pages_config.dart';
 import 'package:agro_tracking_flutter/src/dependency_manager.dart';
 import 'package:agro_tracking_flutter/src/domain/app_theme.dart';
+import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:agro_tracking_flutter/src/presentation/farms/bloc/farm_select_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/farms/farm_select_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/bloc/login_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/login/login_page.dart';
+import 'package:agro_tracking_flutter/src/presentation/media/media_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/menu/bloc/menu_bloc.dart';
 import 'package:agro_tracking_flutter/src/presentation/menu/menu_page.dart';
 import 'package:agro_tracking_flutter/src/presentation/nav/app_title/bloc/app_title_bloc.dart';
@@ -104,6 +106,12 @@ class _ATAppState extends State<ATApp> {
             }
         ),
         GoRoute(
+            path: "/media",
+            pageBuilder: (context, state) {
+              return customTransition(context, state,  MediaPage());
+            }
+        ),
+        GoRoute(
           path: PagesConfig.homeLink,
           pageBuilder: (context, state) {
             return customTransition(context, state, MenuPage());
@@ -118,7 +126,8 @@ class _ATAppState extends State<ATApp> {
                 GoRoute(
                     path:  "add",
                     pageBuilder: (context, state) {
-                      return customTransition(context, state, TrackAddPage(context));
+                      Track? track = state.extra as Track?;
+                      return customTransition(context, state, TrackAddPage(context, track: track,));
                       },
                     routes: [
                       GoRoute(

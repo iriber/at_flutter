@@ -61,10 +61,11 @@ class Login extends StatelessWidget{
         hideText: true,
       ),
     ));
-
+/*
     widgets.add(Container(
       padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ATCheckbox(callback: (value) {
             rememberMe = value;
@@ -90,7 +91,7 @@ class Login extends StatelessWidget{
           )
         ],
       ),
-    ));
+    ));*/
 
     widgets.add(
         Container(

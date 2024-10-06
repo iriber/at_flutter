@@ -8,6 +8,9 @@ import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackWater extends GenericModel{
 
+  int? paddockId;
+  String? paddockDesc;
+
   Lookup? type;
   Lookup? quality;
   Lookup? cleaning;
@@ -15,8 +18,8 @@ class TrackWater extends GenericModel{
   Lookup? windmillQuantity;
   int? trackId;
 
-  TrackWater(id,
-      { this.type,this.quality,this.cleaning,
+  TrackWater(
+      { int id=-1, this.paddockId,this.type,this.quality,this.cleaning,
         this.windmillQuality, this.windmillQuantity, this.trackId
       }):super(id);
 
@@ -27,6 +30,8 @@ class TrackWater extends GenericModel{
   }
 
   TrackWater.fromJson(dynamic item):super(item["id"]) {
+    paddockId = item["paddockId"];
+    paddockDesc = item["paddockDesc"];
     type = Lookup.fromJson(item["type"]);
     quality = Lookup.fromJson(item["quality"]);
     cleaning = Lookup.fromJson(item["cleaning"]);
@@ -45,6 +50,7 @@ class TrackWater extends GenericModel{
       'windmillQuality_code': this.windmillQuality?.code??"",
       'windmillQuantity_code': this.windmillQuantity?.code??"",
       'trackId':trackId??"",
+      'paddockId': paddockId??'',
     };
   }
 

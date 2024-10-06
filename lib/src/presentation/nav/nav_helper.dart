@@ -1,4 +1,5 @@
 import 'package:agro_tracking_flutter/src/config/pages_config.dart';
+import 'package:agro_tracking_flutter/src/domain/track.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -62,8 +63,8 @@ class NavHelper{
       context.pop();
   }
 
-  void navToTrackingAdd(BuildContext context){
-    context.go(PagesConfig.trackingAddLink);
+  void navToTrackingAdd(BuildContext context, {Track? track}){
+    context.go(PagesConfig.trackingAddLink, extra:  track);
   }
 }
 

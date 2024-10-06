@@ -1,5 +1,6 @@
 
 import 'package:agro_tracking_flutter/src/domain/track.dart';
+import 'package:agro_tracking_flutter/src/presentation/nav/nav_helper.dart';
 import 'package:agro_tracking_flutter/src/presentation/tracks/widgets/track_list_item.dart';
 import 'package:agro_tracking_flutter/src/utils/date_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +59,7 @@ class TrackList extends StatelessWidget {
         return TrackListItem(track: element,   onSelect: (context, track) {
           //BlocProvider.of<FarmSelectBloc>(context).add((SelectFarmRequested(company)));
           //DependencyManager().get<CompanySelectBloc>().add(SelectCompanyRequested(company));
-
+          NavHelper().navToTrackingAdd(context,track: track);
         });
       },
     );

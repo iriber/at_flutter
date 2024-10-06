@@ -68,7 +68,7 @@ class TrackEditAnimalList extends StatelessWidget{
       child: Column(
 
         children: [
-          for (final trackAnimal in state.form?.tracksAnimal??List.empty())
+          for (final trackAnimal in state.form?.getTracksAnimalCurrentPaddock()??List.empty())
             TrackAnimalItem(
               trackAnimal: trackAnimal,
               onSelect: (context, selected) {

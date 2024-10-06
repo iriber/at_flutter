@@ -10,6 +10,8 @@ import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackAnimal extends GenericModel{
 
+  int? paddockId;
+  String? paddockDesc;
 
   int? typeId;
   String? typeDesc;
@@ -35,7 +37,7 @@ class TrackAnimal extends GenericModel{
 
 
   TrackAnimal(
-      {int id=-1, this.typeId, this.typeDesc, this.trackId,
+      {int id=-1, this.paddockId,this.typeId, this.typeDesc, this.trackId,
       this.quantity}):super(id);
 
   TrackAnimal.empty():super(-1);
@@ -46,6 +48,8 @@ class TrackAnimal extends GenericModel{
 
   TrackAnimal.fromJson(dynamic item):super(item["id"]) {
     //name=item["name"]??"";
+    paddockId = item["paddockId"];
+    paddockDesc = item["paddockDesc"];
     trackId = item["trackId"];
     typeId = item["typeId"];
     typeDesc = item["typeDesc"];
@@ -58,6 +62,7 @@ class TrackAnimal extends GenericModel{
       'trackId':trackId??"",
       'typeId':typeId??"",
       'quantity':quantity??"",
+      'paddockId': paddockId??'',
 
     };
   }

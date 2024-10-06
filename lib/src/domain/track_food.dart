@@ -8,6 +8,9 @@ import 'package:agro_tracking_flutter/src/domain/user.dart';
 
 class TrackFood extends GenericModel{
 
+  int? paddockId;
+  String? paddockDesc;
+
   int? trackId;
 
   int? lotId;
@@ -28,7 +31,7 @@ class TrackFood extends GenericModel{
   double? premixPercentage;
 
   TrackFood(
-      { int id=-1, this.trackId, this.lotDesc, this.lotId, this.hectares}):super(id);
+      { int id=-1, this.paddockId,this.trackId, this.lotDesc, this.lotId, this.hectares}):super(id);
 
   TrackFood.empty():super(-1);
 
@@ -38,6 +41,8 @@ class TrackFood extends GenericModel{
 
   TrackFood.fromJson(dynamic item):super(item["id"]) {
 
+    paddockId = item["paddockId"];
+    paddockDesc = item["paddockDesc"];
     trackId = item["trackId"];
     lotId = item["lotId"];
     lotDesc = item["lotDesc"];
@@ -48,6 +53,7 @@ class TrackFood extends GenericModel{
       'id':id,
       'trackId':trackId??"",
       'lotId':lotId??"",
+      'paddockId': paddockId??'',
     };
   }
 

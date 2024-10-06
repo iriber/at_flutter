@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 enum TrackAddStatus {
   initial,
   dateSuccess, dateFailure,
-  selectTrackType, selectLivestockType,
+  selectPadock, selectTrackType,selectLivestockType,
 
   sending, success, failure }
 
