@@ -47,14 +47,23 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
     Farm farm = await SharedPrefUtils().getSelectedFarm();
 
     TrackForm form = event.getForm()??TrackForm.empty();
-    form.trackType = null;
-    form.trackLivestockType = null;
+    form.trackType = TrackType.empty;
+    form.trackLivestockType = TrackLivestockType.empty;
 
-    emit(state.copyWithoutMessage(
-        status: () => TrackAddStatus.initial,
-        farm: () => farm,
-        form: () => form
-    ));
+    if( form.originalTrack != null){
+
+      emit(state.copyWithoutMessage(
+          status: () => TrackAddStatus.selectPadock,
+          form: () => form
+      ));
+    }else{
+      emit(state.copyWithoutMessage(
+          status: () => TrackAddStatus.initial,
+          farm: () => farm,
+          form: () => form
+      ));
+    }
+
 
   }
 
@@ -72,6 +81,8 @@ class TrackAddBloc extends Bloc<TrackAddEvent, TrackAddState> {
     track.userId = user.id;
 
     await _service.saveTrack(track).then((result) async {
+
+        form.fill(result);
 
         emit(state.copyWithoutMessage(
           status: () => TrackAddStatus.selectPadock,

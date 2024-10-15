@@ -15,6 +15,7 @@ class TrackForm{
   FormObjectItem _date = FormObjectItem();
   FormObjectItem _time = FormObjectItem();
 
+  Track? originalTrack;
   TrackType? trackType;
   TrackLivestockType? trackLivestockType;
   List<TrackAnimal>? tracksAnimal;
@@ -46,6 +47,7 @@ class TrackForm{
 
   void fill(Track track){
 
+    originalTrack = track;
     _time.value = track.datetime;
     _date.value = track.datetime;
     tracksAnimal= track.animalTracks;
@@ -55,7 +57,7 @@ class TrackForm{
   }
 
   Track buildTrack(){
-    Track track = Track.empty();
+    Track track = originalTrack??Track.empty();
     /*Paddock? paddock = _paddock.getValue();
     track.paddockId = paddock?.id;
     track.paddockDesc = paddock?.name;*/
